@@ -1,0 +1,254 @@
+{
+  "schema_version": "1.0",
+  "description": "草野球・軟式野球スコアブック画像の単独記号読解ルール辞書。",
+  "rules": [
+    {
+      "id": "defense-1",
+      "symbol": "1",
+      "aliases": [],
+      "category": "守備番号",
+      "reading": "投手",
+      "description": "守備番号1は投手を表す。数字単独の場合は守備位置への打球方向または打撃結果の一部として読む。"
+    },
+    {
+      "id": "defense-2",
+      "symbol": "2",
+      "aliases": [],
+      "category": "守備番号",
+      "reading": "捕手",
+      "description": "守備番号2は捕手を表す。数字単独の場合は守備位置への打球方向または打撃結果の一部として読む。"
+    },
+    {
+      "id": "defense-3",
+      "symbol": "3",
+      "aliases": [],
+      "category": "守備番号",
+      "reading": "一塁手",
+      "description": "守備番号3は一塁手を表す。数字単独の場合は守備位置への打球方向または打撃結果の一部として読む。"
+    },
+    {
+      "id": "defense-4",
+      "symbol": "4",
+      "aliases": [],
+      "category": "守備番号",
+      "reading": "二塁手",
+      "description": "守備番号4は二塁手を表す。数字単独の場合は守備位置への打球方向または打撃結果の一部として読む。"
+    },
+    {
+      "id": "defense-5",
+      "symbol": "5",
+      "aliases": [],
+      "category": "守備番号",
+      "reading": "三塁手",
+      "description": "守備番号5は三塁手を表す。数字単独の場合は守備位置への打球方向または打撃結果の一部として読む。"
+    },
+    {
+      "id": "defense-6",
+      "symbol": "6",
+      "aliases": [],
+      "category": "守備番号",
+      "reading": "遊撃手",
+      "description": "守備番号6は遊撃手を表す。数字単独の場合は守備位置への打球方向または打撃結果の一部として読む。"
+    },
+    {
+      "id": "defense-7",
+      "symbol": "7",
+      "aliases": [],
+      "category": "守備番号",
+      "reading": "左翼手",
+      "description": "守備番号7は左翼手を表す。数字単独の場合は守備位置への打球方向または打撃結果の一部として読む。"
+    },
+    {
+      "id": "defense-8",
+      "symbol": "8",
+      "aliases": [],
+      "category": "守備番号",
+      "reading": "中堅手",
+      "description": "守備番号8は中堅手を表す。数字単独の場合は守備位置への打球方向または打撃結果の一部として読む。"
+    },
+    {
+      "id": "defense-9",
+      "symbol": "9",
+      "aliases": [],
+      "category": "守備番号",
+      "reading": "右翼手",
+      "description": "守備番号9は右翼手を表す。数字単独の場合は守備位置への打球方向または打撃結果の一部として読む。"
+    },
+    {
+      "id": "fielding-1-3",
+      "symbol": "1-3",
+      "aliases": [],
+      "category": "守備・打球記録",
+      "reading": "ピッチャーゴロ、ファースト送球アウト",
+      "description": "投手が処理し、一塁手へ送球して打者走者をアウトにした記録。"
+    },
+    {
+      "id": "fielding-6-4-3",
+      "symbol": "6-4-3",
+      "aliases": [],
+      "category": "守備・打球記録",
+      "reading": "ショートゴロ、ダブルプレー",
+      "description": "遊撃手、二塁手、一塁手の順に送球して成立した併殺。"
+    },
+    {
+      "id": "fielding-4e",
+      "symbol": "4E",
+      "aliases": ["4 E"],
+      "category": "守備・打球記録",
+      "reading": "セカンドのエラーによる出塁",
+      "description": "二塁手の失策により打者走者が出塁した記録。"
+    },
+    {
+      "id": "fielding-3-to",
+      "symbol": "3 T.O",
+      "aliases": ["3T.O", "3 TO"],
+      "category": "守備・打球記録",
+      "reading": "一塁手によるタッチアウト",
+      "description": "一塁手が打者走者または走者にタッチしてアウトにした記録。"
+    },
+    {
+      "id": "pitch-ball",
+      "symbol": "ー",
+      "aliases": ["-"],
+      "category": "投球記号",
+      "reading": "ボール",
+      "description": "投球がボールだったことを示す。"
+    },
+    {
+      "id": "pitch-called-strike",
+      "symbol": "✗",
+      "aliases": ["×", "x"],
+      "category": "投球記号",
+      "reading": "見逃しストライク",
+      "description": "打者が見逃したストライクを示す。"
+    },
+    {
+      "id": "pitch-swinging-strike",
+      "symbol": "二重✗",
+      "aliases": ["✗✗", "××", "xx"],
+      "category": "投球記号",
+      "reading": "空振りストライク",
+      "description": "空振りによるストライクを示す。"
+    },
+    {
+      "id": "pitch-foul",
+      "symbol": "△",
+      "aliases": [],
+      "category": "投球記号",
+      "reading": "ファール",
+      "description": "ファールを示す。"
+    },
+    {
+      "id": "plate-appearance-walk",
+      "symbol": "B",
+      "aliases": [],
+      "category": "投球記号",
+      "reading": "フォアボール",
+      "description": "打席の最終記号がBの場合はフォアボールとして読む。"
+    },
+    {
+      "id": "plate-appearance-strikeout-swinging",
+      "symbol": "SK",
+      "aliases": [],
+      "category": "投球記号",
+      "reading": "空振り三振",
+      "description": "打席の最終記号がSKの場合は空振り三振として読む。"
+    },
+    {
+      "id": "other-bunt",
+      "symbol": "◇",
+      "aliases": [],
+      "category": "その他の記号",
+      "reading": "バント",
+      "description": "バントを示す。走者状況やアウト記録と組み合わせてスクイズなどを判定する。"
+    },
+    {
+      "id": "other-wild-pitch",
+      "symbol": "WP",
+      "aliases": [],
+      "category": "その他の記号",
+      "reading": "ワイルドピッチ",
+      "description": "暴投を示す。「’」と対応している場合、その投球と同時に発生したイベントとして読む。"
+    },
+    {
+      "id": "out-first",
+      "symbol": "Ⅰ",
+      "aliases": ["I"],
+      "category": "その他の記号",
+      "reading": "1アウト目",
+      "description": "その回の1つ目のアウトを示す。"
+    },
+    {
+      "id": "out-second",
+      "symbol": "Ⅱ",
+      "aliases": ["II"],
+      "category": "その他の記号",
+      "reading": "2アウト目",
+      "description": "その回の2つ目のアウトを示す。"
+    },
+    {
+      "id": "out-third",
+      "symbol": "Ⅲ",
+      "aliases": ["III"],
+      "category": "その他の記号",
+      "reading": "3アウト目",
+      "description": "その回の3つ目のアウトを示す。"
+    },
+    {
+      "id": "pitch-count-small-number",
+      "symbol": "小さい数字",
+      "aliases": [],
+      "category": "その他の記号",
+      "reading": "相手投手の累計投球数",
+      "description": "マス内に小さく書かれた数字は相手投手の累計投球数として読む。"
+    },
+    {
+      "id": "base-left-on-base",
+      "symbol": "中央のl",
+      "aliases": ["中央のL", "中央l", "l"],
+      "category": "その他の記号",
+      "reading": "残塁",
+      "description": "マス目中央のlはこの回の残塁を示す。"
+    },
+    {
+      "id": "inning-end-double-slash",
+      "symbol": "右下の斜め二重線",
+      "aliases": ["右下斜め二重線", "斜め二重線"],
+      "category": "その他の記号",
+      "reading": "3アウトで攻撃終了",
+      "description": "右下に書かれた斜め二重線は3アウトで攻撃が終了したことを示す。"
+    },
+    {
+      "id": "run-scored-filled-circle",
+      "symbol": "マス目中央の●または塗りつぶし",
+      "aliases": ["●", "塗りつぶし"],
+      "category": "その他の記号",
+      "reading": "得点、ホームイン",
+      "description": "マス目中央の●または塗りつぶしは得点、ホームインを示す。"
+    },
+    {
+      "id": "simultaneous-event-mark",
+      "symbol": "’",
+      "aliases": ["'"],
+      "category": "その他の記号",
+      "reading": "同時イベント",
+      "description": "独立した投球ではなく、その投球に付随する同時イベントを示す。"
+    },
+    {
+      "id": "plate-appearance-in-play",
+      "symbol": "IP",
+      "aliases": ["インプレー"],
+      "category": "投球記号",
+      "reading": "インプレー",
+      "description": "打者がフェアグラウンドへ打球を飛ばし、打撃結果の判定に進んだ投球を示す。"
+    },
+    {
+      "id": "batting-result-pitcher-infield-hit",
+      "symbol": "1H",
+      "aliases": ["1 H", "投手内野安打"],
+      "category": "守備・打球記録",
+      "reading": "投手への内野安打",
+      "description": "投手方向への打球で、打者走者が安打として一塁へ出塁した記録。"
+    }
+  ]
+}

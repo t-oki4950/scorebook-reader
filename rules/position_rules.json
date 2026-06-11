@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "description": "スコアブックのマス内位置と意味の対応ルール。",
+  "rules": [
+    {
+      "id": "cell-bottom-right-first-base",
+      "cell_region": "正方形の右下",
+      "meaning": "1塁到達",
+      "description": "打者走者または走者が1塁に到達したことを示す位置。"
+    },
+    {
+      "id": "cell-top-right-second-base",
+      "cell_region": "正方形の右上",
+      "meaning": "2塁到達",
+      "description": "走者が2塁に到達したことを示す位置。"
+    },
+    {
+      "id": "cell-top-left-third-base",
+      "cell_region": "正方形の左上",
+      "meaning": "3塁到達",
+      "description": "走者が3塁に到達したことを示す位置。"
+    },
+    {
+      "id": "cell-bottom-left-home",
+      "cell_region": "正方形の左下",
+      "meaning": "本塁到達",
+      "description": "走者が本塁に到達し、得点またはホームインしたことを示す位置。"
+    },
+    {
+      "id": "cell-center-left-on-base",
+      "cell_region": "マス目中央",
+      "meaning": "残塁または得点記号の判定位置",
+      "description": "中央のlは残塁、中央の●または塗りつぶしは得点として読む。"
+    },
+    {
+      "id": "cell-small-number",
+      "cell_region": "マス内の小さい数字",
+      "meaning": "相手投手の累計投球数",
+      "description": "投球記録とは分離し、累計投球数として読む。"
+    }
+  ]
+}

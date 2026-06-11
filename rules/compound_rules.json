@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "description": "複数の記号・位置・文脈を組み合わせて読む複合ルール。",
+  "rules": [
+    {
+      "id": "final-symbol-walk",
+      "name": "最終記号Bはフォアボール",
+      "conditions": [
+        "打席内の最終的な打撃結果記号がBである"
+      ],
+      "interpretation": "打撃結果はフォアボール。",
+      "priority": 80
+    },
+    {
+      "id": "final-symbol-swinging-strikeout",
+      "name": "最終記号SKは空振り三振",
+      "conditions": [
+        "打席内の最終的な打撃結果記号がSKである"
+      ],
+      "interpretation": "打撃結果は空振り三振。",
+      "priority": 80
+    },
+    {
+      "id": "squeeze-success-batter-touch-out",
+      "name": "スクイズ成功、打者タッチアウト",
+      "conditions": [
+        "◇がある",
+        "三塁走者がホームインしている",
+        "打者の結果にT.Oがある"
+      ],
+      "interpretation": "スクイズ成功。三塁走者は得点し、打者はタッチアウト。",
+      "priority": 95
+    },
+    {
+      "id": "left-field-triple",
+      "name": "レフトへの三塁打",
+      "conditions": [
+        "守備番号7がある",
+        "進塁線が三塁まで到達している"
+      ],
+      "interpretation": "レフトへの三塁打。",
+      "priority": 85
+    },
+    {
+      "id": "third-out-inning-end",
+      "name": "3アウトで攻撃終了",
+      "conditions": [
+        "Ⅲがある",
+        "右下斜め二重線がある"
+      ],
+      "interpretation": "3アウトで攻撃終了。",
+      "priority": 90
+    },
+    {
+      "id": "apostrophe-simultaneous-event",
+      "name": "アポストロフィは同時イベント",
+      "conditions": [
+        "「’」がある"
+      ],
+      "interpretation": "「’」は独立した投球ではなく、その投球に付随する同時イベントとして扱う。",
+      "priority": 70
+    },
+    {
+      "id": "wild-pitch-with-apostrophe",
+      "name": "WPとアポストロフィの対応",
+      "conditions": [
+        "WPがある",
+        "WPが「’」と対応している"
+      ],
+      "interpretation": "その投球と同時にワイルドピッチが発生したと解釈する。",
+      "priority": 90
+    },
+    {
+      "id": "simultaneous-event-not-extra-pitch",
+      "name": "同時イベントの投球数扱い",
+      "conditions": [
+        "「’」がある",
+        "「’」がWPなどのイベントと対応している",
+        "同じ投球欄に投球記号がある"
+      ],
+      "interpretation": "「’」で示された同時イベントは独立投球として数えず、対応する投球1球の付随イベントとして扱う。",
+      "priority": 88
+    },
+    {
+      "id": "final-result-symbol-not-double-counted",
+      "name": "BやSKは最後の投球を兼ねる",
+      "conditions": [
+        "打席の最終記号がBまたはSKである",
+        "同じ打席の投球数を確認している"
+      ],
+      "interpretation": "BやSKは打席結果であると同時に最後の投球を表すため、別の投球として二重計上しない。",
+      "priority": 88
+    }
+  ]
+}

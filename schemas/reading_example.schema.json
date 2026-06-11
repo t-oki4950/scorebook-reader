@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scorebook Reading Examples",
+  "type": "object",
+  "required": ["schema_version", "examples"],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": { "type": "string" },
+    "description": { "type": "string" },
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "inning", "batter_number", "symbols", "interpretations", "batting_result"],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string" },
+          "inning": { "type": "integer" },
+          "batter_number": { "type": "integer" },
+          "symbols": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "interpretations": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "cumulative_pitch_count": { "type": "integer" },
+          "batting_result": { "type": "string" },
+          "out_count": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

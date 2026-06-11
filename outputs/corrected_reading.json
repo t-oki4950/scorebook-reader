@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0",
+  "source_image": "inputs/images/sample_game_001_scorebook.svg",
+  "status": "corrected",
+  "corrected_by": "human",
+  "at_bats": [
+    {
+      "id": "sample-game-001-inning1-batter1",
+      "inning": 1,
+      "batter_number": 1,
+      "symbols": ["✗", "二重✗", "SK", "Ⅰ", "小さい3"],
+      "interpretations": ["見逃しストライク", "空振りストライク", "空振り三振", "1アウト目"],
+      "pitch_events": [
+        {"label": "見逃しストライク", "symbol": "✗", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "二重✗", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "SK", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 3,
+      "batting_result": "空振り三振",
+      "out_count": "1アウト目",
+      "runner_events": [],
+      "notes": "SKは最後の投球を兼ねるため、別球として二重計上しない。"
+    },
+    {
+      "id": "sample-game-001-inning1-batter2",
+      "inning": 1,
+      "batter_number": 2,
+      "symbols": ["ー", "二重✗", "ー", "ー", "B", "小さい8"],
+      "interpretations": ["ボール", "空振りストライク", "ボール", "ボール", "フォアボール"],
+      "pitch_events": [
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "二重✗", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "B", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 8,
+      "batting_result": "フォアボール",
+      "runner_events": [
+        "その後、3番打者の打席中のワイルドピッチで二塁へ進塁",
+        "3番打者の打席中に本塁生還",
+        "得点"
+      ],
+      "notes": "Bは最後のボール投球を兼ねる。"
+    },
+    {
+      "id": "sample-game-001-inning1-batter3",
+      "inning": 1,
+      "batter_number": 3,
+      "symbols": ["ー ’ WP", "二重✗", "ー", "IP", "1H", "小さい12", "マス目中央の●または塗りつぶし"],
+      "interpretations": ["ボール。同時イベントとしてワイルドピッチ", "空振りストライク", "ボール", "インプレー", "投手への内野安打"],
+      "pitch_events": [
+        {"label": "ボール。同時イベントとしてワイルドピッチ", "symbol": "ー", "counts_as_pitch": true, "simultaneous_events": ["WP"]},
+        {"label": "空振りストライク", "symbol": "二重✗", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "インプレー", "symbol": "IP", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 12,
+      "batting_result": "投手への内野安打",
+      "runner_events": [
+        "一塁出塁",
+        "4番打者の打席中に二塁、三塁を回って本塁生還",
+        "得点"
+      ],
+      "notes": "WPは「’」に対応する同時イベントなので独立投球として数えない。"
+    },
+    {
+      "id": "sample-game-001-inning1-batter4",
+      "inning": 1,
+      "batter_number": 4,
+      "symbols": ["IP", "7", "三塁到達", "小さい13", "マス目中央の●または塗りつぶし"],
+      "interpretations": ["初球インプレー", "レフトへの三塁打"],
+      "pitch_events": [
+        {"label": "初球インプレー", "symbol": "IP", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 13,
+      "batting_result": "レフトへの三塁打",
+      "runner_events": [
+        "三塁まで到達",
+        "5番打者の打席中に本塁生還",
+        "得点"
+      ],
+      "notes": "守備番号7と三塁到達からレフトへの三塁打として読む。"
+    },
+    {
+      "id": "sample-game-001-inning1-batter5",
+      "inning": 1,
+      "batter_number": 5,
+      "symbols": ["IP", "◇", "3 T.O", "Ⅱ", "小さい14"],
+      "interpretations": ["初球インプレー", "スクイズ成功", "打者は一塁手によるタッチアウト", "2アウト目"],
+      "pitch_events": [
+        {"label": "初球インプレー", "symbol": "IP", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 14,
+      "batting_result": "スクイズ成功、打者は一塁手によるタッチアウト",
+      "out_count": "2アウト目",
+      "runner_events": [],
+      "notes": "◇、三塁走者ホームイン、3 T.O の組み合わせでスクイズ成功。"
+    },
+    {
+      "id": "sample-game-001-inning1-batter6",
+      "inning": 1,
+      "batter_number": 6,
+      "symbols": ["ー", "ー", "✗", "△", "ー", "△", "B", "小さい21", "中央l"],
+      "interpretations": ["ボール", "ボール", "見逃しストライク", "ファール", "ボール", "ファール", "フォアボール"],
+      "pitch_events": [
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "見逃しストライク", "symbol": "✗", "counts_as_pitch": true},
+        {"label": "ファール", "symbol": "△", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "ファール", "symbol": "△", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "B", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 21,
+      "batting_result": "フォアボール",
+      "runner_events": ["この回残塁"],
+      "notes": "ファールは投球数に含める。Bは最後のボール投球を兼ねる。"
+    },
+    {
+      "id": "sample-game-001-inning1-batter7",
+      "inning": 1,
+      "batter_number": 7,
+      "symbols": ["△", "二重✗", "SK", "Ⅲ", "右下斜め二重線", "小さい24"],
+      "interpretations": ["ファール", "空振りストライク", "空振り三振", "3アウト目", "攻撃終了"],
+      "pitch_events": [
+        {"label": "ファール", "symbol": "△", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "二重✗", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "SK", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 24,
+      "batting_result": "空振り三振",
+      "out_count": "3アウト目",
+      "inning_end": true,
+      "runner_events": ["右下斜め二重線により攻撃終了"],
+      "notes": "Ⅲと右下斜め二重線があるため3アウトで攻撃終了。"
+    }
+  ],
+  "correction_notes": [
+    {
+      "at_bat_id": "sample-game-001-inning1-batter1",
+      "before": "アウト記号未確定",
+      "after": "1アウト目",
+      "reason": "Ⅰを人間が確認したため。"
+    },
+    {
+      "at_bat_id": "sample-game-001-inning1-batter5",
+      "before": "バント、打者タッチアウト",
+      "after": "スクイズ成功、打者は一塁手によるタッチアウト",
+      "reason": "◇、三塁走者ホームイン、3 T.O が同時に成立しているため。"
+    }
+  ],
+  "rule_candidates": [
+    {
+      "type": "symbol",
+      "symbol": "IP",
+      "reading": "インプレー"
+    },
+    {
+      "type": "symbol",
+      "symbol": "1H",
+      "reading": "投手への内野安打"
+    },
+    {
+      "type": "compound",
+      "name": "同時イベントの投球数扱い",
+      "reason": "「’」で対応するWPは独立投球ではない。"
+    }
+  ]
+}

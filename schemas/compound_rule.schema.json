@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scorebook Compound Rules",
+  "type": "object",
+  "required": ["schema_version", "rules"],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": { "type": "string" },
+    "description": { "type": "string" },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "conditions", "interpretation", "priority"],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "conditions": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" }
+          },
+          "interpretation": { "type": "string" },
+          "priority": { "type": "integer" }
+        }
+      }
+    }
+  }
+}

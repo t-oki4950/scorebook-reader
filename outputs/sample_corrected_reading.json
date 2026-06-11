@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "source_image": "inputs/images/sample_scorebook.jpg",
+  "status": "corrected",
+  "corrected_by": "human",
+  "correction_policy": "AIの仮読み取りを人間が確認し、次回の読解に使える事例とルール候補を残す。",
+  "at_bats": [
+    {
+      "id": "sample-inning1-batter1",
+      "inning": 1,
+      "batter_number": 1,
+      "symbols": ["✗", "二重✗", "SK", "小さい3"],
+      "interpretations": ["見逃しストライク", "空振りストライク", "空振り三振"],
+      "cumulative_pitch_count": 3,
+      "batting_result": "空振り三振",
+      "notes": "AI仮読み取りどおり。小さい3は累計投球数。"
+    },
+    {
+      "id": "sample-inning1-batter5",
+      "inning": 1,
+      "batter_number": 5,
+      "symbols": ["小さい14", "◇", "3 T.O", "Ⅱ", "マス目中央の●または塗りつぶし"],
+      "interpretations": ["初球スクイズ", "三塁走者ホームイン", "打者は一塁手にタッチアウト"],
+      "cumulative_pitch_count": 14,
+      "batting_result": "スクイズ成功、打者タッチアウト",
+      "out_count": "2アウト目",
+      "notes": "三塁走者のホームインを人間が確認。スクイズ成功として事例化する。"
+    }
+  ],
+  "correction_notes": [
+    {
+      "at_bat_id": "sample-inning1-batter5",
+      "before": "バント、打者タッチアウト",
+      "after": "スクイズ成功、打者タッチアウト",
+      "reason": "◇、三塁走者ホームイン、3 T.O が同時に成立しているため。"
+    }
+  ],
+  "rule_candidates": [
+    {
+      "type": "compound",
+      "name": "スクイズ成功、打者タッチアウト",
+      "reason": "◇、三塁走者ホームイン、T.O の組み合わせで判定できる。"
+    }
+  ]
+}

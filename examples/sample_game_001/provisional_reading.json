@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "source_image": "inputs/images/sample_game_001_scorebook.svg",
+  "status": "provisional",
+  "created_by": "ai",
+  "reading_policy": "実運用テスト用のAI仮読み取りデータ。画像認識APIには接続しない。",
+  "at_bats": [
+    {
+      "id": "sample-game-001-inning1-batter1",
+      "inning": 1,
+      "batter_number": 1,
+      "symbols": ["✗", "二重✗", "SK", "小さい3"],
+      "interpretations": ["見逃しストライク", "空振りストライク", "空振り三振"],
+      "pitch_events": [
+        {"label": "見逃しストライク", "symbol": "✗", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "二重✗", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "SK", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 3,
+      "batting_result": "空振り三振",
+      "confidence": "high",
+      "uncertain_points": ["1アウト目の記号は薄く、要確認"]
+    },
+    {
+      "id": "sample-game-001-inning1-batter2",
+      "inning": 1,
+      "batter_number": 2,
+      "symbols": ["ー", "二重✗", "ー", "ー", "B", "小さい8"],
+      "interpretations": ["ボール", "空振りストライク", "ボール", "ボール", "フォアボール"],
+      "pitch_events": [
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "二重✗", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "B", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 8,
+      "batting_result": "フォアボール",
+      "runner_events": ["一塁出塁"],
+      "confidence": "medium",
+      "uncertain_points": ["後続打者中の進塁と得点は未反映"]
+    },
+    {
+      "id": "sample-game-001-inning1-batter3",
+      "inning": 1,
+      "batter_number": 3,
+      "symbols": ["ー ’ WP", "二重✗", "ー", "IP", "1H", "小さい12"],
+      "interpretations": ["ボールと同時にワイルドピッチ", "空振りストライク", "ボール", "インプレー", "投手方向の出塁"],
+      "pitch_events": [
+        {"label": "ボール。同時イベントとしてワイルドピッチ", "symbol": "ー", "counts_as_pitch": true, "simultaneous_events": ["WP"]},
+        {"label": "空振りストライク", "symbol": "二重✗", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "インプレー", "symbol": "IP", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 12,
+      "batting_result": "投手への内野安打",
+      "runner_events": ["一塁出塁"],
+      "confidence": "medium",
+      "uncertain_points": ["2番走者の本塁生還は要確認"]
+    },
+    {
+      "id": "sample-game-001-inning1-batter4",
+      "inning": 1,
+      "batter_number": 4,
+      "symbols": ["IP", "7", "小さい13"],
+      "interpretations": ["初球インプレー", "レフト方向の打球"],
+      "pitch_events": [
+        {"label": "初球インプレー", "symbol": "IP", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 13,
+      "batting_result": "レフトへの長打",
+      "runner_events": ["三塁まで到達"],
+      "confidence": "medium",
+      "uncertain_points": ["三塁打か失策絡みか要確認"]
+    },
+    {
+      "id": "sample-game-001-inning1-batter5",
+      "inning": 1,
+      "batter_number": 5,
+      "symbols": ["IP", "◇", "3 T.O", "Ⅱ", "小さい14"],
+      "interpretations": ["初球インプレー", "バント", "一塁手によるタッチアウト", "2アウト目"],
+      "pitch_events": [
+        {"label": "初球インプレー", "symbol": "IP", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 14,
+      "batting_result": "バント、打者タッチアウト",
+      "out_count": "2アウト目",
+      "confidence": "medium",
+      "uncertain_points": ["スクイズ成功か要確認"]
+    },
+    {
+      "id": "sample-game-001-inning1-batter6",
+      "inning": 1,
+      "batter_number": 6,
+      "symbols": ["ー", "ー", "✗", "△", "ー", "△", "B", "小さい21", "中央l"],
+      "interpretations": ["ボール", "ボール", "見逃しストライク", "ファール", "ボール", "ファール", "フォアボール"],
+      "pitch_events": [
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "見逃しストライク", "symbol": "✗", "counts_as_pitch": true},
+        {"label": "ファール", "symbol": "△", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "ー", "counts_as_pitch": true},
+        {"label": "ファール", "symbol": "△", "counts_as_pitch": true},
+        {"label": "ボール", "symbol": "B", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 21,
+      "batting_result": "フォアボール",
+      "runner_events": ["この回残塁"],
+      "confidence": "high",
+      "uncertain_points": []
+    },
+    {
+      "id": "sample-game-001-inning1-batter7",
+      "inning": 1,
+      "batter_number": 7,
+      "symbols": ["△", "二重✗", "SK", "Ⅲ", "右下斜め二重線", "小さい24"],
+      "interpretations": ["ファール", "空振りストライク", "空振り三振", "3アウト目", "攻撃終了"],
+      "pitch_events": [
+        {"label": "ファール", "symbol": "△", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "二重✗", "counts_as_pitch": true},
+        {"label": "空振りストライク", "symbol": "SK", "counts_as_pitch": true}
+      ],
+      "cumulative_pitch_count": 24,
+      "batting_result": "空振り三振",
+      "out_count": "3アウト目",
+      "inning_end": true,
+      "confidence": "high",
+      "uncertain_points": []
+    }
+  ],
+  "confidence_notes": [
+    "2番打者、3番打者、4番打者の走者イベントは人間修正で補う。",
+    "5番打者はスクイズ成功かどうかを人間が確認する。"
+  ]
+}
