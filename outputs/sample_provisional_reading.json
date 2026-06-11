@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "source_image": "inputs/images/sample_scorebook.jpg",
+  "status": "provisional",
+  "created_by": "ai",
+  "reading_policy": "AIによる仮読み取り。曖昧な箇所は confidence_notes に残す。",
+  "at_bats": [
+    {
+      "id": "sample-inning1-batter1",
+      "inning": 1,
+      "batter_number": 1,
+      "symbols": ["✗", "二重✗", "SK", "小さい3"],
+      "interpretations": ["見逃しストライク", "空振りストライク", "空振り三振"],
+      "cumulative_pitch_count": 3,
+      "batting_result": "空振り三振",
+      "confidence": "high",
+      "used_rules": [
+        "pitch-called-strike",
+        "pitch-swinging-strike",
+        "plate-appearance-strikeout-swinging",
+        "pitch-count-small-number"
+      ],
+      "uncertain_points": []
+    },
+    {
+      "id": "sample-inning1-batter5",
+      "inning": 1,
+      "batter_number": 5,
+      "symbols": ["小さい14", "◇", "3 T.O", "Ⅱ"],
+      "interpretations": ["バント", "一塁手によるタッチアウト", "2アウト目"],
+      "cumulative_pitch_count": 14,
+      "batting_result": "バント、打者タッチアウト",
+      "out_count": "2アウト目",
+      "confidence": "medium",
+      "used_rules": [
+        "other-bunt",
+        "fielding-3-to",
+        "out-second"
+      ],
+      "uncertain_points": [
+        "三塁走者がホームインしたかどうかは画像上で要確認"
+      ]
+    }
+  ],
+  "confidence_notes": [
+    "sample-inning1-batter5 はスクイズ成立の可能性があるが、三塁走者の本塁到達記号が不鮮明。"
+  ]
+}

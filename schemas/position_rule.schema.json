@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scorebook Position Rules",
+  "type": "object",
+  "required": ["schema_version", "rules"],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": { "type": "string" },
+    "description": { "type": "string" },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "cell_region", "meaning", "description"],
+        "additionalProperties": true,
+        "properties": {
+          "id": { "type": "string" },
+          "cell_region": { "type": "string" },
+          "meaning": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}
