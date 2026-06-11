@@ -176,6 +176,23 @@ def normalize_at_bat(at_bat, index):
     return normalized
 
 
+def reading_signature(reading_data):
+    return json.dumps(reading_data.get("at_bats", []), ensure_ascii=False, sort_keys=True)
+
+
+def reset_editor_state(source_data, prefer_corrected=False):
+    if prefer_corrected:
+        existing_corrected = load_json(CORRECTED_FILE, {})
+        source_at_bats = existing_corrected.get("at_bats") or source_data.get("at_bats", [])
+    else:
+        source_at_bats = source_data.get("at_bats", [])
+    st.session_state.edited_at_bats = [
+        normalize_at_bat(at_bat, index) for index, at_bat in enumerate(source_at_bats)
+    ]
+    st.session_state.editor_source_signature = reading_signature(source_data)
+    st.session_state.editor_generation = st.session_state.get("editor_generation", 0) + 1
+
+
 def build_corrected_reading(source_data, edited_at_bats):
     corrected = deepcopy(source_data)
     corrected["status"] = "corrected"
@@ -189,9 +206,7 @@ def load_sample_game():
     corrected = load_json(SAMPLE_CORRECTED_FILE, {})
     save_json(PROVISIONAL_FILE, provisional)
     save_json(CORRECTED_FILE, corrected)
-    st.session_state.edited_at_bats = [
-        normalize_at_bat(at_bat, index) for index, at_bat in enumerate(corrected.get("at_bats", []))
-    ]
+    reset_editor_state(provisional, prefer_corrected=True)
 
 
 def add_reading_example(at_bat):
@@ -347,12 +362,12 @@ def ensure_state():
         PROVISIONAL_FILE,
         {"schema_version": "1.0", "source_image": "", "status": "provisional", "at_bats": []},
     )
-    if "edited_at_bats" not in st.session_state:
-        existing_corrected = load_json(CORRECTED_FILE, {})
-        source_at_bats = existing_corrected.get("at_bats") or source_data.get("at_bats", [])
-        st.session_state.edited_at_bats = [
-            normalize_at_bat(at_bat, index) for index, at_bat in enumerate(source_at_bats)
-        ]
+    signature = reading_signature(source_data)
+    if (
+        "edited_at_bats" not in st.session_state
+        or st.session_state.get("editor_source_signature") != signature
+    ):
+        reset_editor_state(source_data)
     return source_data
 
 
@@ -488,33 +503,39 @@ def render_operational_actions():
 
 
 def render_at_bat_editor(at_bat, index):
+    generation = st.session_state.get("editor_generation", 0)
     title = f"{at_bat.get('inning', '')}回 {at_bat.get('batter_number', '')}人目"
     with st.expander(title, expanded=index == 0):
         left, right = st.columns([2, 1])
         with left:
-            inning = st.number_input("イニング", min_value=1, value=int(at_bat.get("inning") or 1), key=f"inning-{index}")
+            inning = st.number_input(
+                "イニング",
+                min_value=1,
+                value=int(at_bat.get("inning") or 1),
+                key=f"inning-{generation}-{index}",
+            )
             batter_number = st.number_input(
                 "打者番号",
                 min_value=1,
                 value=int(at_bat.get("batter_number") or index + 1),
-                key=f"batter-{index}",
+                key=f"batter-{generation}-{index}",
             )
             symbols_text = st.text_area(
                 "投球内容・記号",
                 value=join_list(at_bat.get("symbols", [])),
                 help="1行に1つずつ入力します。",
-                key=f"symbols-{index}",
+                key=f"symbols-{generation}-{index}",
             )
             interpretations_text = st.text_area(
                 "解釈",
                 value=join_list(at_bat.get("interpretations", [])),
                 help="1行に1つずつ入力します。",
-                key=f"interpretations-{index}",
+                key=f"interpretations-{generation}-{index}",
             )
             batting_result = st.text_input(
                 "打撃結果",
                 value=at_bat.get("batting_result", ""),
-                key=f"result-{index}",
+                key=f"result-{generation}-{index}",
             )
         with right:
             pitch_count_value = at_bat.get("cumulative_pitch_count")
@@ -522,21 +543,25 @@ def render_at_bat_editor(at_bat, index):
                 "累計投球数",
                 min_value=0,
                 value=int(pitch_count_value) if pitch_count_value is not None else 0,
-                key=f"pitch-count-{index}",
+                key=f"pitch-count-{generation}-{index}",
             )
             has_pitch_count = st.checkbox(
                 "累計投球数を保存",
                 value=pitch_count_value is not None,
-                key=f"has-pitch-count-{index}",
+                key=f"has-pitch-count-{generation}-{index}",
             )
-            out_count = st.text_input("アウトカウント", value=at_bat.get("out_count", ""), key=f"out-{index}")
+            out_count = st.text_input(
+                "アウトカウント",
+                value=at_bat.get("out_count", ""),
+                key=f"out-{generation}-{index}",
+            )
             runner_events_text = st.text_area(
                 "走者イベント",
                 value=join_list(at_bat.get("runner_events", [])),
                 help="例: 三塁走者ホームイン",
-                key=f"runner-events-{index}",
+                key=f"runner-events-{generation}-{index}",
             )
-            notes = st.text_area("備考", value=at_bat.get("notes", ""), key=f"notes-{index}")
+            notes = st.text_area("備考", value=at_bat.get("notes", ""), key=f"notes-{generation}-{index}")
 
         updated = deepcopy(at_bat)
         updated.update(
@@ -555,7 +580,7 @@ def render_at_bat_editor(at_bat, index):
 
         button_cols = st.columns(3)
         with button_cols[0]:
-            if st.button("読み取り事例として追加", key=f"example-{index}"):
+            if st.button("読み取り事例として追加", key=f"example-{generation}-{index}"):
                 example_id = add_reading_example(updated)
                 st.success(f"reading_examples.json に追加しました: {example_id}")
         with button_cols[1]:
@@ -628,7 +653,7 @@ def main():
         st.subheader("仮読み取りJSON")
         st.json(source_data, expanded=False)
         if st.button("provisional_reading.json を再読み込み"):
-            st.session_state.pop("edited_at_bats", None)
+            reset_editor_state(source_data)
             st.rerun()
 
     st.subheader("修正前後を比較")
@@ -641,9 +666,7 @@ def main():
         st.info("outputs/provisional_reading.json に at_bats を追加すると、修正フォームが表示されます。")
         if st.button("サンプル仮読み取りを読み込む"):
             sample = load_json(SAMPLE_PROVISIONAL_FILE, {})
-            st.session_state.edited_at_bats = [
-                normalize_at_bat(at_bat, index) for index, at_bat in enumerate(sample.get("at_bats", []))
-            ]
+            reset_editor_state(sample)
             st.rerun()
     else:
         updated_at_bats = []
