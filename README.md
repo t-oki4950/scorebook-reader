@@ -128,6 +128,8 @@ python3 -m venv .venv
 
 API従量課金を避けたい場合は、画面の「Codex読解依頼Markdownを生成」を押します。`outputs/codex_reading_request.md` に、選択中の画像パス、出力してほしいJSON形式、最新ルールブックがまとまります。そのMarkdownをCodexに渡して仮読み取りJSONを作成し、`outputs/provisional_reading.json` に保存してから画面で再読み込みします。
 
+生成後は、画面に表示される短い依頼文をコピーしてCodexのチャット欄に貼り付けます。StreamlitからCodexアプリのチャット欄へ直接自動入力することは、ブラウザとOSの安全制限により行いません。
+
 ## 新しい記号を追加する
 
 単独記号の読み方は `rules/symbol_dictionary.json` に保存します。追加は次のように行います。

@@ -30,6 +30,7 @@ SYMBOL_RULES_FILE = PROJECT_ROOT / "rules" / "symbol_dictionary.json"
 COMPOUND_RULES_FILE = PROJECT_ROOT / "rules" / "compound_rules.json"
 PROMPT_CONTEXT_FILE = PROJECT_ROOT / "outputs" / "prompt_context.md"
 CODEX_READING_REQUEST_FILE = PROJECT_ROOT / "outputs" / "codex_reading_request.md"
+CODEX_CHAT_PROMPT_FILE = PROJECT_ROOT / "outputs" / "codex_chat_prompt.txt"
 SAMPLE_GAME_DIR = PROJECT_ROOT / "examples" / "sample_game_001"
 SAMPLE_PROVISIONAL_FILE = SAMPLE_GAME_DIR / "provisional_reading.json"
 SAMPLE_CORRECTED_FILE = SAMPLE_GAME_DIR / "corrected_reading.json"
@@ -221,6 +222,47 @@ def build_codex_reading_request(image_path):
 
 {prompt_context}
 """
+
+
+def build_codex_chat_prompt():
+    return "このファイルを読んで実行してください:\noutputs/codex_reading_request.md"
+
+
+def render_copy_button(text, button_label="依頼文をコピー"):
+    escaped_label = html.escape(button_label)
+    text_json = json.dumps(text, ensure_ascii=False)
+    components.html(
+        f"""
+        <button id="copy-button" style="
+          border: 1px solid rgba(49, 51, 63, 0.2);
+          border-radius: 6px;
+          padding: 0.45rem 0.75rem;
+          background: #ffffff;
+          color: rgb(49, 51, 63);
+          font-size: 14px;
+          cursor: pointer;
+        ">{escaped_label}</button>
+        <span id="copy-status" style="
+          margin-left: 0.75rem;
+          color: rgba(49, 51, 63, 0.7);
+          font-size: 13px;
+        "></span>
+        <script>
+          const text = {text_json};
+          const button = document.getElementById("copy-button");
+          const status = document.getElementById("copy-status");
+          button.addEventListener("click", async () => {{
+            try {{
+              await navigator.clipboard.writeText(text);
+              status.textContent = "コピーしました";
+            }} catch (error) {{
+              status.textContent = "コピーできませんでした。下の本文を選択してコピーしてください。";
+            }}
+          }});
+        </script>
+        """,
+        height=48,
+    )
 
 
 def next_example_id(inning, batter_number, existing_examples):
@@ -591,9 +633,14 @@ def render_codex_request_actions(selected_image):
     if st.button("Codex読解依頼Markdownを生成", disabled=selected_image is None):
         request_markdown = build_codex_reading_request(selected_image)
         CODEX_READING_REQUEST_FILE.write_text(request_markdown, encoding="utf-8")
+        CODEX_CHAT_PROMPT_FILE.write_text(build_codex_chat_prompt() + "\n", encoding="utf-8")
         st.success(f"{CODEX_READING_REQUEST_FILE.relative_to(PROJECT_ROOT)} を生成しました。")
 
     if CODEX_READING_REQUEST_FILE.exists():
+        chat_prompt = build_codex_chat_prompt()
+        st.markdown("Codexのチャット欄に貼る短い依頼文:")
+        st.code(chat_prompt, language="text")
+        render_copy_button(chat_prompt)
         with st.expander("生成済み依頼Markdownを表示", expanded=False):
             st.code(CODEX_READING_REQUEST_FILE.read_text(encoding="utf-8"), language="markdown")
 
