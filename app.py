@@ -1,6 +1,8 @@
 import base64
 import binascii
+import html
 import json
+import mimetypes
 import re
 import sys
 from copy import deepcopy
@@ -32,6 +34,7 @@ SAMPLE_PROVISIONAL_FILE = SAMPLE_GAME_DIR / "provisional_reading.json"
 SAMPLE_CORRECTED_FILE = SAMPLE_GAME_DIR / "corrected_reading.json"
 PASTE_COMPONENT_DIR = PROJECT_ROOT / "components" / "paste_image"
 
+MAX_IMAGE_PREVIEW_HEIGHT = 640
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".tif", ".tiff", ".svg"}
 IMAGE_UPLOAD_TYPES = ["png", "jpg", "jpeg", "webp", "gif", "bmp", "tif", "tiff", "svg"]
 MIME_TO_SUFFIX = {
@@ -294,6 +297,51 @@ def get_image_files():
     return sorted(path for path in INPUT_IMAGE_DIR.iterdir() if path.suffix.lower() in IMAGE_EXTENSIONS)
 
 
+def image_data_uri(image_path):
+    mime_type, _ = mimetypes.guess_type(image_path.name)
+    if not mime_type:
+        mime_type = "image/png"
+    encoded = base64.b64encode(image_path.read_bytes()).decode("ascii")
+    return f"data:{mime_type};base64,{encoded}"
+
+
+def render_image_preview(image_path):
+    data_uri = image_data_uri(image_path)
+    escaped_name = html.escape(image_path.name)
+    components.html(
+        f"""
+        <div style="
+          width: 100%;
+          min-height: 180px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #fafafa;
+          border: 1px solid rgba(49, 51, 63, 0.12);
+          border-radius: 8px;
+          padding: 8px;
+          box-sizing: border-box;
+        ">
+          <img
+            src="{data_uri}"
+            alt="{escaped_name}"
+            title="{escaped_name}"
+            style="
+              display: block;
+              max-width: 100%;
+              max-height: {MAX_IMAGE_PREVIEW_HEIGHT}px;
+              width: auto;
+              height: auto;
+              object-fit: contain;
+            "
+          />
+        </div>
+        """,
+        height=MAX_IMAGE_PREVIEW_HEIGHT + 24,
+        scrolling=False,
+    )
+
+
 def ensure_state():
     source_data = load_json(
         PROVISIONAL_FILE,
@@ -356,7 +404,7 @@ def render_image_panel(source_data):
         index=default_index,
         format_func=lambda path: path.name,
     )
-    st.image(str(selected_image), use_container_width=True)
+    render_image_preview(selected_image)
 
 
 def compare_readings(provisional, corrected):
