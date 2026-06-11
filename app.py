@@ -62,6 +62,16 @@ def join_list(values):
     return "\n".join(str(value) for value in values)
 
 
+def format_cell_value(value):
+    if isinstance(value, list):
+        return "\n".join(str(item) for item in value)
+    if isinstance(value, dict):
+        return json.dumps(value, ensure_ascii=False, sort_keys=True)
+    if value is None:
+        return ""
+    return str(value)
+
+
 def slugify(text, fallback):
     slug = re.sub(r"[^0-9A-Za-z]+", "-", text.strip()).strip("-").lower()
     return slug or fallback
@@ -273,8 +283,8 @@ def compare_readings(provisional, corrected):
                     {
                         "打席": f"{corrected_at_bat.get('inning')}回{corrected_at_bat.get('batter_number')}人目",
                         "項目": label,
-                        "修正前": before,
-                        "修正後": after,
+                        "修正前": format_cell_value(before),
+                        "修正後": format_cell_value(after),
                     }
                 )
     return rows
