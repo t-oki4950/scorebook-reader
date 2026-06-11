@@ -1,0 +1,2 @@
+このファイルを読んで実行してください:
+outputs/codex_reading_request.md

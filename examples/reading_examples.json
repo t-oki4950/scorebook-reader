@@ -6,8 +6,17 @@
       "id": "inning1-batter1",
       "inning": 1,
       "batter_number": 1,
-      "symbols": ["✗", "二重✗", "SK", "小さい3"],
-      "interpretations": ["見逃しストライク", "空振りストライク", "空振り三振"],
+      "symbols": [
+        "✗",
+        "二重✗",
+        "SK",
+        "小さい3"
+      ],
+      "interpretations": [
+        "見逃しストライク",
+        "空振りストライク",
+        "空振り三振"
+      ],
       "cumulative_pitch_count": 3,
       "batting_result": "空振り三振",
       "notes": ""
@@ -16,8 +25,17 @@
       "id": "inning1-batter5",
       "inning": 1,
       "batter_number": 5,
-      "symbols": ["小さい14", "◇", "3 T.O", "Ⅱ"],
-      "interpretations": ["初球スクイズ", "三塁走者ホームイン", "打者は一塁手にタッチアウト"],
+      "symbols": [
+        "小さい14",
+        "◇",
+        "3 T.O",
+        "Ⅱ"
+      ],
+      "interpretations": [
+        "初球スクイズ",
+        "三塁走者ホームイン",
+        "打者は一塁手にタッチアウト"
+      ],
       "cumulative_pitch_count": 14,
       "batting_result": "スクイズ成功、打者タッチアウト",
       "out_count": "2アウト目",
@@ -27,8 +45,26 @@
       "id": "inning1-batter6",
       "inning": 1,
       "batter_number": 6,
-      "symbols": ["ー", "ー", "✗", "△", "ー", "△", "B", "小さい21", "中央l"],
-      "interpretations": ["ボール", "ボール", "見逃しストライク", "ファール", "ボール", "ファール", "フォアボール"],
+      "symbols": [
+        "ー",
+        "ー",
+        "✗",
+        "△",
+        "ー",
+        "△",
+        "B",
+        "小さい21",
+        "中央l"
+      ],
+      "interpretations": [
+        "ボール",
+        "ボール",
+        "見逃しストライク",
+        "ファール",
+        "ボール",
+        "ファール",
+        "フォアボール"
+      ],
       "cumulative_pitch_count": 21,
       "batting_result": "フォアボール",
       "notes": "この回残塁"
@@ -37,8 +73,18 @@
       "id": "inning1-batter7",
       "inning": 1,
       "batter_number": 7,
-      "symbols": ["△", "二重✗", "SK", "Ⅲ", "右下斜め二重線"],
-      "interpretations": ["ファール", "空振りストライク", "空振り三振"],
+      "symbols": [
+        "△",
+        "二重✗",
+        "SK",
+        "Ⅲ",
+        "右下斜め二重線"
+      ],
+      "interpretations": [
+        "ファール",
+        "空振りストライク",
+        "空振り三振"
+      ],
       "cumulative_pitch_count": 24,
       "batting_result": "空振り三振",
       "notes": "3アウト攻撃終了"
@@ -47,8 +93,19 @@
       "id": "sample-game-001-inning1-batter1",
       "inning": 1,
       "batter_number": 1,
-      "symbols": ["✗", "二重✗", "SK", "Ⅰ", "小さい3"],
-      "interpretations": ["見逃しストライク", "空振りストライク", "空振り三振", "1アウト目"],
+      "symbols": [
+        "✗",
+        "二重✗",
+        "SK",
+        "Ⅰ",
+        "小さい3"
+      ],
+      "interpretations": [
+        "見逃しストライク",
+        "空振りストライク",
+        "空振り三振",
+        "1アウト目"
+      ],
       "cumulative_pitch_count": 3,
       "batting_result": "空振り三振",
       "out_count": "1アウト目",
@@ -58,8 +115,21 @@
       "id": "sample-game-001-inning1-batter2",
       "inning": 1,
       "batter_number": 2,
-      "symbols": ["ー", "二重✗", "ー", "ー", "B", "小さい8"],
-      "interpretations": ["ボール", "空振りストライク", "ボール", "ボール", "フォアボール"],
+      "symbols": [
+        "ー",
+        "二重✗",
+        "ー",
+        "ー",
+        "B",
+        "小さい8"
+      ],
+      "interpretations": [
+        "ボール",
+        "空振りストライク",
+        "ボール",
+        "ボール",
+        "フォアボール"
+      ],
       "cumulative_pitch_count": 8,
       "batting_result": "フォアボール",
       "notes": "3番打者の打席中のワイルドピッチで二塁へ進塁し、その後本塁生還して得点。"
@@ -68,8 +138,22 @@
       "id": "sample-game-001-inning1-batter3",
       "inning": 1,
       "batter_number": 3,
-      "symbols": ["ー ’ WP", "二重✗", "ー", "IP", "1H", "小さい12", "マス目中央の●または塗りつぶし"],
-      "interpretations": ["ボール。同時イベントとしてワイルドピッチ", "空振りストライク", "ボール", "インプレー", "投手への内野安打"],
+      "symbols": [
+        "ー ’ WP",
+        "二重✗",
+        "ー",
+        "IP",
+        "1H",
+        "小さい12",
+        "マス目中央の●または塗りつぶし"
+      ],
+      "interpretations": [
+        "ボール。同時イベントとしてワイルドピッチ",
+        "空振りストライク",
+        "ボール",
+        "インプレー",
+        "投手への内野安打"
+      ],
       "cumulative_pitch_count": 12,
       "batting_result": "投手への内野安打",
       "notes": "WPは「’」に対応する同時イベントなので独立投球として数えない。"
@@ -78,8 +162,17 @@
       "id": "sample-game-001-inning1-batter4",
       "inning": 1,
       "batter_number": 4,
-      "symbols": ["IP", "7", "三塁到達", "小さい13", "マス目中央の●または塗りつぶし"],
-      "interpretations": ["初球インプレー", "レフトへの三塁打"],
+      "symbols": [
+        "IP",
+        "7",
+        "三塁到達",
+        "小さい13",
+        "マス目中央の●または塗りつぶし"
+      ],
+      "interpretations": [
+        "初球インプレー",
+        "レフトへの三塁打"
+      ],
       "cumulative_pitch_count": 13,
       "batting_result": "レフトへの三塁打",
       "notes": "守備番号7と三塁到達からレフトへの三塁打として読む。"
@@ -88,8 +181,19 @@
       "id": "sample-game-001-inning1-batter5",
       "inning": 1,
       "batter_number": 5,
-      "symbols": ["IP", "◇", "3 T.O", "Ⅱ", "小さい14"],
-      "interpretations": ["初球インプレー", "スクイズ成功", "打者は一塁手によるタッチアウト", "2アウト目"],
+      "symbols": [
+        "IP",
+        "◇",
+        "3 T.O",
+        "Ⅱ",
+        "小さい14"
+      ],
+      "interpretations": [
+        "初球インプレー",
+        "スクイズ成功",
+        "打者は一塁手によるタッチアウト",
+        "2アウト目"
+      ],
       "cumulative_pitch_count": 14,
       "batting_result": "スクイズ成功、打者は一塁手によるタッチアウト",
       "out_count": "2アウト目",
@@ -99,8 +203,26 @@
       "id": "sample-game-001-inning1-batter6",
       "inning": 1,
       "batter_number": 6,
-      "symbols": ["ー", "ー", "✗", "△", "ー", "△", "B", "小さい21", "中央l"],
-      "interpretations": ["ボール", "ボール", "見逃しストライク", "ファール", "ボール", "ファール", "フォアボール"],
+      "symbols": [
+        "ー",
+        "ー",
+        "✗",
+        "△",
+        "ー",
+        "△",
+        "B",
+        "小さい21",
+        "中央l"
+      ],
+      "interpretations": [
+        "ボール",
+        "ボール",
+        "見逃しストライク",
+        "ファール",
+        "ボール",
+        "ファール",
+        "フォアボール"
+      ],
       "cumulative_pitch_count": 21,
       "batting_result": "フォアボール",
       "notes": "ファールは投球数に含める。Bは最後のボール投球を兼ねる。この回残塁。"
@@ -109,12 +231,116 @@
       "id": "sample-game-001-inning1-batter7",
       "inning": 1,
       "batter_number": 7,
-      "symbols": ["△", "二重✗", "SK", "Ⅲ", "右下斜め二重線", "小さい24"],
-      "interpretations": ["ファール", "空振りストライク", "空振り三振", "3アウト目", "攻撃終了"],
+      "symbols": [
+        "△",
+        "二重✗",
+        "SK",
+        "Ⅲ",
+        "右下斜め二重線",
+        "小さい24"
+      ],
+      "interpretations": [
+        "ファール",
+        "空振りストライク",
+        "空振り三振",
+        "3アウト目",
+        "攻撃終了"
+      ],
       "cumulative_pitch_count": 24,
       "batting_result": "空振り三振",
       "out_count": "3アウト目",
       "notes": "Ⅲと右下斜め二重線があるため3アウトで攻撃終了。"
+    },
+    {
+      "id": "inning1-batter2",
+      "inning": 1,
+      "batter_number": 2,
+      "symbols": [
+        "✗（見送りストライク）",
+        "9（ライトへの打球）",
+        "真ん中のマス目の赤い進塁線",
+        "左上に（３）",
+        "丸囲み4らしき印",
+        "中央の赤丸",
+        "左下に小さく３の数字"
+      ],
+      "interpretations": [
+        "✗（見送りストライク）",
+        "9（ライトへの打球）",
+        "真ん中のマス目の赤い進塁線らしき印は半周性→２塁打",
+        "左上の（３）は打者３番のときに３塁に進塁",
+        "丸囲み4らしき印→打者４番の打撃でホームイン",
+        "中央の赤丸はホームインして得点になった",
+        "左下の小さい３の数字は累計投球数"
+      ],
+      "batting_result": "ライト方向の打球で２塁打",
+      "notes": "",
+      "cumulative_pitch_count": 3
+    },
+    {
+      "id": "inning1-batter3",
+      "inning": 1,
+      "batter_number": 3,
+      "symbols": [
+        "Ⅱ",
+        "6-3",
+        "左側には",
+        "ー（ボール）",
+        "✗（見送りストライク）",
+        "ー（ボール）",
+        "７（累計７球）"
+      ],
+      "interpretations": [
+        "2アウト目",
+        "遊撃手から一塁手への送球アウト"
+      ],
+      "batting_result": "ショートゴロ、一塁送球アウト",
+      "notes": "Ⅱと6-3が比較的明瞭に読める。投球内容と累計投球数は確認できない。",
+      "cumulative_pitch_count": 7,
+      "out_count": "2アウト目"
+    },
+    {
+      "id": "inning1-batter4",
+      "inning": 1,
+      "batter_number": 4,
+      "symbols": [
+        "8",
+        "赤い進塁線らしき印",
+        "左端",
+        "△（ファール）",
+        "△（ファール）",
+        "１０（累計投球数）"
+      ],
+      "interpretations": [
+        "中堅手方向またはセンター方向の打球",
+        "赤い進塁線は上まで伸びているので２塁まで進塁＝２塁打",
+        "中央の「ｌ」は残塁を示す"
+      ],
+      "batting_result": "センター方向の打球、出塁または進塁の可能性",
+      "notes": "8は守備番号8として中堅手方向と仮読みにした。赤い線の意味は人間確認が必要。",
+      "cumulative_pitch_count": 10
+    },
+    {
+      "id": "inning1-batter5-2",
+      "inning": 1,
+      "batter_number": 5,
+      "symbols": [
+        "Ⅲ",
+        "5-3",
+        "右下斜め線らしき印",
+        "左端二重✗",
+        "左下に1２"
+      ],
+      "interpretations": [
+        "３アウトの記号",
+        "三塁手から一塁手への送球アウト",
+        "攻撃終了の印",
+        "二重✗（空振りストライク）"
+      ],
+      "batting_result": "サードゴロ、一塁送球アウト",
+      "notes": "アウト記号がⅡにもⅢにも見える。右下に斜め線らしきものがあり、3アウト攻撃終了の可能性があるが、画像の切れ方のため未確定。",
+      "cumulative_pitch_count": 12,
+      "out_count": "3アウト"
     }
   ]
 }
