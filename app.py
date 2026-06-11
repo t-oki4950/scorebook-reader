@@ -29,6 +29,7 @@ READING_EXAMPLES_FILE = PROJECT_ROOT / "examples" / "reading_examples.json"
 SYMBOL_RULES_FILE = PROJECT_ROOT / "rules" / "symbol_dictionary.json"
 COMPOUND_RULES_FILE = PROJECT_ROOT / "rules" / "compound_rules.json"
 PROMPT_CONTEXT_FILE = PROJECT_ROOT / "outputs" / "prompt_context.md"
+CODEX_READING_REQUEST_FILE = PROJECT_ROOT / "outputs" / "codex_reading_request.md"
 SAMPLE_GAME_DIR = PROJECT_ROOT / "examples" / "sample_game_001"
 SAMPLE_PROVISIONAL_FILE = SAMPLE_GAME_DIR / "provisional_reading.json"
 SAMPLE_CORRECTED_FILE = SAMPLE_GAME_DIR / "corrected_reading.json"
@@ -157,6 +158,69 @@ def set_new_image_source(image_path):
 
 def render_paste_image_input():
     return paste_image_component(key="paste-image-component")
+
+
+def build_codex_reading_request(image_path):
+    prompt_context = build_markdown()
+    PROMPT_CONTEXT_FILE.write_text(prompt_context, encoding="utf-8")
+    image_text = "未選択"
+    if image_path:
+        image_text = str(image_path.resolve())
+
+    return f"""# Codexへのスコアブック仮読み取り依頼
+
+以下の画像を読解し、`outputs/provisional_reading.json` に保存できる仮読み取りJSONを作成してください。
+
+画像ファイル:
+
+```text
+{image_text}
+```
+
+## 目的
+
+この作業の目的は、チーム成績DBを完成させることではありません。スコアブック画像を仮読み取りし、人間がStreamlit画面で修正できる形のJSONを作ることです。
+
+## 出力先
+
+`outputs/provisional_reading.json`
+
+## 出力形式
+
+```json
+{{
+  "schema_version": "1.0",
+  "source_image": "inputs/images/画像ファイル名",
+  "status": "provisional",
+  "at_bats": [
+    {{
+      "id": "inning1-batter1",
+      "inning": 1,
+      "batter_number": 1,
+      "symbols": ["読み取った記号や投球内容"],
+      "interpretations": ["記号の解釈"],
+      "cumulative_pitch_count": 0,
+      "batting_result": "打撃結果",
+      "out_count": "",
+      "runner_events": [],
+      "notes": "曖昧な点や根拠"
+    }}
+  ]
+}}
+```
+
+## 読解時の注意
+
+- 断定できない箇所は `notes` に推測として明示してください。
+- 小さい数字は相手投手の累計投球数として扱ってください。
+- 「’」は独立した投球ではなく、同時イベントの印として扱ってください。
+- `B` や `SK` は最後の投球を兼ねるため、投球数を二重計上しないでください。
+- 画像内に読めないマスがある場合も、分かる打席だけでJSONを作ってください。
+
+## 最新ルールブック
+
+{prompt_context}
+"""
 
 
 def next_example_id(inning, batter_number, existing_examples):
@@ -420,7 +484,7 @@ def render_image_panel(source_data):
 
     if not image_files:
         st.info("inputs/images/ に画像を置くと、ここに表示されます。")
-        return
+        return None
 
     if not source_data.get("at_bats"):
         st.info("画像の貼り付け・アップロードだけでは読解結果は生成されません。AIの仮読み取りJSONを outputs/provisional_reading.json に入れてから再読み込みしてください。")
@@ -432,6 +496,7 @@ def render_image_panel(source_data):
         format_func=lambda path: path.name,
     )
     render_image_preview(selected_image)
+    return selected_image
 
 
 def compare_readings(provisional, corrected):
@@ -512,6 +577,25 @@ def render_operational_actions():
             else:
                 added = add_all_current_examples(st.session_state.edited_at_bats)
                 st.success(f"{len(added)}件を reading_examples.json に追加しました。")
+
+
+def render_codex_request_actions(selected_image):
+    st.subheader("Codex手動読解")
+    st.caption("APIを使わず、選択中の画像と最新ルールブックをCodexに渡すための依頼Markdownを生成します。")
+
+    if selected_image:
+        st.code(str(selected_image.resolve()), language="text")
+    else:
+        st.warning("先に画像をアップロード、貼り付け、または選択してください。")
+
+    if st.button("Codex読解依頼Markdownを生成", disabled=selected_image is None):
+        request_markdown = build_codex_reading_request(selected_image)
+        CODEX_READING_REQUEST_FILE.write_text(request_markdown, encoding="utf-8")
+        st.success(f"{CODEX_READING_REQUEST_FILE.relative_to(PROJECT_ROOT)} を生成しました。")
+
+    if CODEX_READING_REQUEST_FILE.exists():
+        with st.expander("生成済み依頼Markdownを表示", expanded=False):
+            st.code(CODEX_READING_REQUEST_FILE.read_text(encoding="utf-8"), language="markdown")
 
 
 def render_at_bat_editor(at_bat, index):
@@ -660,13 +744,15 @@ def main():
     source_data = ensure_state()
     top_left, top_right = st.columns([1, 1])
     with top_left:
-        render_image_panel(source_data)
+        selected_image = render_image_panel(source_data)
     with top_right:
         st.subheader("仮読み取りJSON")
         st.json(source_data, expanded=False)
         if st.button("provisional_reading.json を再読み込み"):
             reset_editor_state(source_data)
             st.rerun()
+
+    render_codex_request_actions(selected_image)
 
     st.subheader("修正前後を比較")
     render_comparison(source_data)

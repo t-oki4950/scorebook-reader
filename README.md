@@ -126,6 +126,8 @@ python3 -m venv .venv
 
 画像を追加すると、古い仮読み取り・修正結果は空になります。画像認識AIはまだ接続していないため、読解結果を表示するには `outputs/provisional_reading.json` にAIの仮読み取りJSONを入れてから、画面の再読み込みボタンを押します。
 
+API従量課金を避けたい場合は、画面の「Codex読解依頼Markdownを生成」を押します。`outputs/codex_reading_request.md` に、選択中の画像パス、出力してほしいJSON形式、最新ルールブックがまとまります。そのMarkdownをCodexに渡して仮読み取りJSONを作成し、`outputs/provisional_reading.json` に保存してから画面で再読み込みします。
+
 ## 新しい記号を追加する
 
 単独記号の読み方は `rules/symbol_dictionary.json` に保存します。追加は次のように行います。
