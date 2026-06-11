@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: rgb(49, 51, 63);
+    }
+
+    .paste-zone {
+      min-height: 92px;
+      border: 1px dashed rgba(49, 51, 63, 0.35);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: rgba(250, 250, 250, 0.8);
+      outline: none;
+      cursor: text;
+    }
+
+    .paste-zone:focus {
+      border-color: rgb(255, 75, 75);
+      box-shadow: 0 0 0 1px rgba(255, 75, 75, 0.25);
+    }
+
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .hint,
+    .status {
+      font-size: 13px;
+      line-height: 1.45;
+      color: rgba(49, 51, 63, 0.7);
+    }
+
+    .status {
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="paste-zone" class="paste-zone" tabindex="0">
+    <div class="title">クリップボードから画像を貼り付け</div>
+    <div class="hint">この枠をクリックして Cmd+V を押してください。スクリーンショットやコピーした画像を保存できます。</div>
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    const zone = document.getElementById("paste-zone");
+    const status = document.getElementById("status");
+
+    function sendMessage(type, data) {
+      window.parent.postMessage(
+        Object.assign({ isStreamlitMessage: true, type }, data),
+        "*"
+      );
+    }
+
+    function setFrameHeight() {
+      sendMessage("streamlit:setFrameHeight", { height: document.body.scrollHeight });
+    }
+
+    function setComponentValue(value) {
+      sendMessage("streamlit:setComponentValue", { value, dataType: "json" });
+    }
+
+    sendMessage("streamlit:componentReady", { apiVersion: 1 });
+    setFrameHeight();
+
+    window.addEventListener("message", (event) => {
+      if (event.data && event.data.type === "streamlit:render") {
+        setFrameHeight();
+      }
+    });
+
+    zone.addEventListener("paste", (event) => {
+      const items = Array.from(event.clipboardData && event.clipboardData.items || []);
+      const imageItem = items.find((item) => item.type && item.type.startsWith("image/"));
+
+      if (!imageItem) {
+        status.textContent = "クリップボードに画像が見つかりませんでした。";
+        setFrameHeight();
+        return;
+      }
+
+      event.preventDefault();
+      const file = imageItem.getAsFile();
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const signature = `${file.type}:${file.size}:${file.lastModified || Date.now()}`;
+        status.textContent = "画像を受け取りました。保存しています...";
+        setComponentValue({
+          data_url: reader.result,
+          type: file.type,
+          size: file.size,
+          signature
+        });
+        setFrameHeight();
+      };
+
+      reader.onerror = () => {
+        status.textContent = "画像の読み取りに失敗しました。";
+        setFrameHeight();
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>

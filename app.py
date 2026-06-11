@@ -1,3 +1,5 @@
+import base64
+import binascii
 import json
 import re
 import sys
@@ -6,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -27,12 +30,23 @@ PROMPT_CONTEXT_FILE = PROJECT_ROOT / "outputs" / "prompt_context.md"
 SAMPLE_GAME_DIR = PROJECT_ROOT / "examples" / "sample_game_001"
 SAMPLE_PROVISIONAL_FILE = SAMPLE_GAME_DIR / "provisional_reading.json"
 SAMPLE_CORRECTED_FILE = SAMPLE_GAME_DIR / "corrected_reading.json"
+PASTE_COMPONENT_DIR = PROJECT_ROOT / "components" / "paste_image"
 
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".tif", ".tiff", ".svg"}
 IMAGE_UPLOAD_TYPES = ["png", "jpg", "jpeg", "webp", "gif", "bmp", "tif", "tiff", "svg"]
+MIME_TO_SUFFIX = {
+    "image/png": ".png",
+    "image/jpeg": ".jpg",
+    "image/webp": ".webp",
+    "image/gif": ".gif",
+    "image/bmp": ".bmp",
+    "image/tiff": ".tiff",
+    "image/svg+xml": ".svg",
+}
 
 
 st.set_page_config(page_title="Scorebook Reader", layout="wide")
+paste_image_component = components.declare_component("paste_image", path=str(PASTE_COMPONENT_DIR))
 
 
 def load_json(path, fallback):
@@ -89,11 +103,30 @@ def make_image_filename(original_name):
     return f"{timestamp}-{stem}{suffix}"
 
 
+def make_pasted_image_filename(mime_type):
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    suffix = MIME_TO_SUFFIX.get(mime_type, ".png")
+    return f"{timestamp}-pasted-scorebook{suffix}"
+
+
 def save_uploaded_image(uploaded_file):
     INPUT_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
     filename = make_image_filename(getattr(uploaded_file, "name", "scorebook-image.png"))
     destination = INPUT_IMAGE_DIR / filename
     destination.write_bytes(uploaded_file.getvalue())
+    return destination
+
+
+def save_pasted_image(payload):
+    data_url = payload.get("data_url", "")
+    if "," not in data_url:
+        raise ValueError("貼り付け画像のデータ形式を読み取れません。")
+    header, encoded = data_url.split(",", 1)
+    mime_type = payload.get("type") or header.removeprefix("data:").split(";", 1)[0]
+    filename = make_pasted_image_filename(mime_type)
+    destination = INPUT_IMAGE_DIR / filename
+    INPUT_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(base64.b64decode(encoded))
     return destination
 
 
@@ -110,13 +143,8 @@ def set_provisional_source_image(image_path):
     save_json(PROVISIONAL_FILE, provisional)
 
 
-def get_chat_input_files(chat_value):
-    if chat_value is None:
-        return []
-    files = getattr(chat_value, "files", None)
-    if files is None and isinstance(chat_value, dict):
-        files = chat_value.get("files")
-    return list(files or [])
+def render_paste_image_input():
+    return paste_image_component(key="paste-image-component")
 
 
 def next_example_id(inning, batter_number, existing_examples):
@@ -296,24 +324,19 @@ def render_image_panel(source_data):
             st.success(f"画像を保存しました: {saved_image.name}")
             st.rerun()
 
-    pasted_input = st.chat_input(
-        "画像を貼り付ける場合は、この入力欄を選んで Cmd+V → Enter",
-        accept_file=True,
-        file_type=IMAGE_UPLOAD_TYPES,
-        key="pasted-image-input",
-    )
-    pasted_files = get_chat_input_files(pasted_input)
-    if pasted_files:
-        signature = "|".join(uploaded_file_signature(file) for file in pasted_files)
+    pasted_payload = render_paste_image_input()
+    if pasted_payload:
+        signature = pasted_payload.get("signature")
         if signature != st.session_state.get("last_pasted_image_signature"):
-            saved_images = [save_uploaded_image(file) for file in pasted_files]
-            st.session_state.last_pasted_image_signature = signature
-            set_provisional_source_image(saved_images[-1])
-            if len(saved_images) == 1:
-                st.success(f"貼り付け画像を保存しました: {saved_images[0].name}")
+            try:
+                saved_image = save_pasted_image(pasted_payload)
+            except (ValueError, binascii.Error) as error:
+                st.error(f"貼り付け画像を保存できませんでした: {error}")
             else:
-                st.success(f"貼り付け画像を{len(saved_images)}件保存しました。")
-            st.rerun()
+                st.session_state.last_pasted_image_signature = signature
+                set_provisional_source_image(saved_image)
+                st.success(f"貼り付け画像を保存しました: {saved_image.name}")
+                st.rerun()
 
     image_files = get_image_files()
     source_image = source_data.get("source_image", "")
