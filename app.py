@@ -137,13 +137,22 @@ def uploaded_file_signature(uploaded_file):
     return f"{getattr(uploaded_file, 'name', '')}:{len(uploaded_file.getvalue())}"
 
 
-def set_provisional_source_image(image_path):
-    provisional = load_json(
-        PROVISIONAL_FILE,
-        {"schema_version": "1.0", "source_image": "", "status": "provisional", "at_bats": []},
-    )
-    provisional["source_image"] = str(image_path.relative_to(PROJECT_ROOT))
+def empty_reading(source_image, status):
+    return {
+        "schema_version": "1.0",
+        "source_image": source_image,
+        "status": status,
+        "at_bats": [],
+    }
+
+
+def set_new_image_source(image_path):
+    source_image = str(image_path.relative_to(PROJECT_ROOT))
+    provisional = empty_reading(source_image, "provisional")
+    corrected = empty_reading(source_image, "corrected")
     save_json(PROVISIONAL_FILE, provisional)
+    save_json(CORRECTED_FILE, corrected)
+    reset_editor_state(provisional)
 
 
 def render_paste_image_input():
@@ -383,8 +392,8 @@ def render_image_panel(source_data):
         if signature != st.session_state.get("last_uploaded_image_signature"):
             saved_image = save_uploaded_image(uploaded_image)
             st.session_state.last_uploaded_image_signature = signature
-            set_provisional_source_image(saved_image)
-            st.success(f"画像を保存しました: {saved_image.name}")
+            set_new_image_source(saved_image)
+            st.success(f"画像を保存しました: {saved_image.name}。仮読み取りJSONは空にしました。")
             st.rerun()
 
     pasted_payload = render_paste_image_input()
@@ -397,8 +406,8 @@ def render_image_panel(source_data):
                 st.error(f"貼り付け画像を保存できませんでした: {error}")
             else:
                 st.session_state.last_pasted_image_signature = signature
-                set_provisional_source_image(saved_image)
-                st.success(f"貼り付け画像を保存しました: {saved_image.name}")
+                set_new_image_source(saved_image)
+                st.success(f"貼り付け画像を保存しました: {saved_image.name}。仮読み取りJSONは空にしました。")
                 st.rerun()
 
     image_files = get_image_files()
@@ -412,6 +421,9 @@ def render_image_panel(source_data):
     if not image_files:
         st.info("inputs/images/ に画像を置くと、ここに表示されます。")
         return
+
+    if not source_data.get("at_bats"):
+        st.info("画像の貼り付け・アップロードだけでは読解結果は生成されません。AIの仮読み取りJSONを outputs/provisional_reading.json に入れてから再読み込みしてください。")
 
     selected_image = st.selectbox(
         "表示する画像",
