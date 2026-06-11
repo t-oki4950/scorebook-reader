@@ -2,8 +2,7 @@
   "schema_version": "1.0",
   "source_image": "inputs/images/sample_game_001_scorebook.svg",
   "status": "corrected",
-  "created_by": "ai",
-  "reading_policy": "実運用テスト用のAI仮読み取りデータ。画像認識APIには接続しない。",
+  "corrected_by": "human",
   "at_bats": [
     {
       "id": "sample-game-001-inning1-batter1",
@@ -43,7 +42,7 @@
       "batting_result": "空振り三振",
       "out_count": "1アウト目",
       "runner_events": [],
-      "notes": "SKは最後の投球を"
+      "notes": "SKは最後の投球を兼ねるため、別球として二重計上しない。"
     },
     {
       "id": "sample-game-001-inning1-batter2",
@@ -98,8 +97,7 @@
         "3番打者の打席中に本塁生還",
         "得点"
       ],
-      "notes": "Bは最後のボール投球を兼ねる。",
-      "out_count": ""
+      "notes": "Bは最後のボール投球を兼ねる。"
     },
     {
       "id": "sample-game-001-inning1-batter3",
@@ -153,8 +151,7 @@
         "4番打者の打席中に二塁、三塁を回って本塁生還",
         "得点"
       ],
-      "notes": "WPは「’」に対応する同時イベントなので独立投球として数えない。",
-      "out_count": ""
+      "notes": "WPは「’」に対応する同時イベントなので独立投球として数えない。"
     },
     {
       "id": "sample-game-001-inning1-batter4",
@@ -185,8 +182,7 @@
         "5番打者の打席中に本塁生還",
         "得点"
       ],
-      "notes": "守備番号7と三塁到達からレフトへの三塁打として読む。",
-      "out_count": ""
+      "notes": "守備番号7と三塁到達からレフトへの三塁打として読む。"
     },
     {
       "id": "sample-game-001-inning1-batter5",
@@ -284,8 +280,7 @@
       "runner_events": [
         "この回残塁"
       ],
-      "notes": "ファールは投球数に含める。Bは最後のボール投球を兼ねる。",
-      "out_count": ""
+      "notes": "ファールは投球数に含める。Bは最後のボール投球を兼ねる。"
     },
     {
       "id": "sample-game-001-inning1-batter7",
@@ -333,9 +328,35 @@
       "notes": "Ⅲと右下斜め二重線があるため3アウトで攻撃終了。"
     }
   ],
-  "confidence_notes": [
-    "2番打者、3番打者、4番打者の走者イベントは人間修正で補う。",
-    "5番打者はスクイズ成功かどうかを人間が確認する。"
+  "correction_notes": [
+    {
+      "at_bat_id": "sample-game-001-inning1-batter1",
+      "before": "アウト記号未確定",
+      "after": "1アウト目",
+      "reason": "Ⅰを人間が確認したため。"
+    },
+    {
+      "at_bat_id": "sample-game-001-inning1-batter5",
+      "before": "バント、打者タッチアウト",
+      "after": "スクイズ成功、打者は一塁手によるタッチアウト",
+      "reason": "◇、三塁走者ホームイン、3 T.O が同時に成立しているため。"
+    }
   ],
-  "correction_notes": []
+  "rule_candidates": [
+    {
+      "type": "symbol",
+      "symbol": "IP",
+      "reading": "インプレー"
+    },
+    {
+      "type": "symbol",
+      "symbol": "1H",
+      "reading": "投手への内野安打"
+    },
+    {
+      "type": "compound",
+      "name": "同時イベントの投球数扱い",
+      "reason": "「’」で対応するWPは独立投球ではない。"
+    }
+  ]
 }

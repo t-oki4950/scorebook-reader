@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "source_image": "inputs/images/sample_game_001_scorebook.svg",
+  "source_image": "inputs/images/20260611-223130-pasted-scorebook.png",
   "status": "provisional",
   "created_by": "ai",
   "reading_policy": "実運用テスト用のAI仮読み取りデータ。画像認識APIには接続しない。",
