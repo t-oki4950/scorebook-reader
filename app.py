@@ -2,6 +2,7 @@ import json
 import re
 import sys
 from copy import deepcopy
+from datetime import datetime
 from pathlib import Path
 
 import streamlit as st
@@ -28,6 +29,7 @@ SAMPLE_PROVISIONAL_FILE = SAMPLE_GAME_DIR / "provisional_reading.json"
 SAMPLE_CORRECTED_FILE = SAMPLE_GAME_DIR / "corrected_reading.json"
 
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".tif", ".tiff", ".svg"}
+IMAGE_UPLOAD_TYPES = ["png", "jpg", "jpeg", "webp", "gif", "bmp", "tif", "tiff", "svg"]
 
 
 st.set_page_config(page_title="Scorebook Reader", layout="wide")
@@ -75,6 +77,46 @@ def format_cell_value(value):
 def slugify(text, fallback):
     slug = re.sub(r"[^0-9A-Za-z]+", "-", text.strip()).strip("-").lower()
     return slug or fallback
+
+
+def make_image_filename(original_name):
+    original_path = Path(original_name or "scorebook-image.png")
+    suffix = original_path.suffix.lower()
+    if suffix not in IMAGE_EXTENSIONS:
+        suffix = ".png"
+    stem = slugify(original_path.stem, "scorebook-image")[:48]
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    return f"{timestamp}-{stem}{suffix}"
+
+
+def save_uploaded_image(uploaded_file):
+    INPUT_IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    filename = make_image_filename(getattr(uploaded_file, "name", "scorebook-image.png"))
+    destination = INPUT_IMAGE_DIR / filename
+    destination.write_bytes(uploaded_file.getvalue())
+    return destination
+
+
+def uploaded_file_signature(uploaded_file):
+    return f"{getattr(uploaded_file, 'name', '')}:{len(uploaded_file.getvalue())}"
+
+
+def set_provisional_source_image(image_path):
+    provisional = load_json(
+        PROVISIONAL_FILE,
+        {"schema_version": "1.0", "source_image": "", "status": "provisional", "at_bats": []},
+    )
+    provisional["source_image"] = str(image_path.relative_to(PROJECT_ROOT))
+    save_json(PROVISIONAL_FILE, provisional)
+
+
+def get_chat_input_files(chat_value):
+    if chat_value is None:
+        return []
+    files = getattr(chat_value, "files", None)
+    if files is None and isinstance(chat_value, dict):
+        files = chat_value.get("files")
+    return list(files or [])
 
 
 def next_example_id(inning, batter_number, existing_examples):
@@ -240,6 +282,39 @@ def ensure_state():
 
 def render_image_panel(source_data):
     st.subheader("画像")
+    uploaded_image = st.file_uploader(
+        "画像をアップロード",
+        type=IMAGE_UPLOAD_TYPES,
+        help="Finderから選ぶ、またはこの枠へドラッグ&ドロップできます。",
+    )
+    if uploaded_image is not None:
+        signature = uploaded_file_signature(uploaded_image)
+        if signature != st.session_state.get("last_uploaded_image_signature"):
+            saved_image = save_uploaded_image(uploaded_image)
+            st.session_state.last_uploaded_image_signature = signature
+            set_provisional_source_image(saved_image)
+            st.success(f"画像を保存しました: {saved_image.name}")
+            st.rerun()
+
+    pasted_input = st.chat_input(
+        "画像を貼り付ける場合は、この入力欄を選んで Cmd+V → Enter",
+        accept_file=True,
+        file_type=IMAGE_UPLOAD_TYPES,
+        key="pasted-image-input",
+    )
+    pasted_files = get_chat_input_files(pasted_input)
+    if pasted_files:
+        signature = "|".join(uploaded_file_signature(file) for file in pasted_files)
+        if signature != st.session_state.get("last_pasted_image_signature"):
+            saved_images = [save_uploaded_image(file) for file in pasted_files]
+            st.session_state.last_pasted_image_signature = signature
+            set_provisional_source_image(saved_images[-1])
+            if len(saved_images) == 1:
+                st.success(f"貼り付け画像を保存しました: {saved_images[0].name}")
+            else:
+                st.success(f"貼り付け画像を{len(saved_images)}件保存しました。")
+            st.rerun()
+
     image_files = get_image_files()
     source_image = source_data.get("source_image", "")
     default_index = 0
