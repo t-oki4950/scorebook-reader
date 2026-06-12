@@ -170,7 +170,8 @@ def build_codex_reading_request(image_path):
 
     return f"""# Codexへのスコアブック仮読み取り依頼
 
-以下の画像を読解し、`outputs/provisional_reading.json` に保存できる仮読み取りJSONを作成してください。
+以下の画像は、原則としてスコアブックの「1打席分のマス」です。
+画像を読解し、`outputs/provisional_reading.json` に保存できる仮読み取りJSONを作成してください。
 
 画像ファイル:
 
@@ -180,7 +181,9 @@ def build_codex_reading_request(image_path):
 
 ## 目的
 
-この作業の目的は、チーム成績DBを完成させることではありません。スコアブック画像を仮読み取りし、人間がStreamlit画面で修正できる形のJSONを作ることです。
+この作業の目的は、チーム成績DBを完成させることではありません。
+1打席分の画像を仮読み取りし、人間がStreamlit画面で添削できる形のJSONを作ることです。
+人間の添削結果は、次回以降の読解ルール・事例として蓄積します。
 
 ## 出力先
 
@@ -198,8 +201,10 @@ def build_codex_reading_request(image_path):
       "id": "inning1-batter1",
       "inning": 1,
       "batter_number": 1,
-      "symbols": ["読み取った記号や投球内容"],
+      "symbols": ["読み取った記号、打撃記録、走塁記録"],
       "interpretations": ["記号の解釈"],
+      "pitch_sequence": ["ー", "ー", "✗"],
+      "count_summary": "2ボール1ストライク",
       "cumulative_pitch_count": 0,
       "batting_result": "打撃結果",
       "out_count": "",
@@ -213,14 +218,16 @@ def build_codex_reading_request(image_path):
 ## 読解時の注意
 
 - 断定できない箇所は `notes` に推測として明示してください。
+- まず「投球の記号と順序」「カウント」「打撃結果」「走塁状況」を考えてください。
 - 小さい数字は相手投手の累計投球数として扱ってください。
 - ボールカウント欄が小さくても、見える投球記号は必ず `symbols` に入れてください。
-- 投球記号は専用フィールドを増やさず、既存の `symbols` と `interpretations` に入れてください。
-- `ー`, `✗`, `二重✗`, `△`, `B`, `K`, `SK` などを見つけたら、打撃・走塁記録と同じ打席データ内に並べてください。
+- 投球記号の順序が読める場合は、`pitch_sequence` に順番通り入れてください。
+- カウントが推定できる場合は、`count_summary` に「2ボール1ストライク」のように書いてください。
+- `ー`, `✗`, `二重✗`, `△`, `B`, `K`, `SK` などを見つけたら、打撃・走塁記録と同じ打席データ内の `symbols` にも入れてください。
 - 判読が不確実な投球記号は、`?` または `らしき記載` を付けて `symbols` に残し、`notes` に不確実性を書いてください。
 - 「’」は独立した投球ではなく、同時イベントの印として扱ってください。
 - `B` や `SK` は最後の投球を兼ねるため、投球数を二重計上しないでください。
-- 画像内に読めないマスがある場合も、分かる打席だけでJSONを作ってください。
+- 1打席画像の中で読めない領域がある場合も、見える範囲だけでJSONを作ってください。
 
 ## 最新ルールブック
 
@@ -287,6 +294,8 @@ def normalize_at_bat(at_bat, index):
     normalized.setdefault("batter_number", index + 1)
     normalized.setdefault("symbols", [])
     normalized.setdefault("interpretations", [])
+    normalized.setdefault("pitch_sequence", [])
+    normalized.setdefault("count_summary", "")
     normalized.setdefault("cumulative_pitch_count", None)
     normalized.setdefault("batting_result", "")
     normalized.setdefault("out_count", "")
@@ -340,6 +349,10 @@ def add_reading_example(at_bat):
         "batting_result": at_bat.get("batting_result", ""),
         "notes": at_bat.get("notes", ""),
     }
+    if at_bat.get("pitch_sequence"):
+        example["pitch_sequence"] = at_bat["pitch_sequence"]
+    if at_bat.get("count_summary"):
+        example["count_summary"] = at_bat["count_summary"]
     if at_bat.get("cumulative_pitch_count") is not None:
         example["cumulative_pitch_count"] = at_bat["cumulative_pitch_count"]
     if at_bat.get("out_count"):
@@ -554,6 +567,8 @@ def compare_readings(provisional, corrected):
         for field, label in [
             ("symbols", "投球内容"),
             ("interpretations", "解釈"),
+            ("pitch_sequence", "投球記号と順序"),
+            ("count_summary", "カウント"),
             ("cumulative_pitch_count", "累計投球数"),
             ("batting_result", "打撃結果"),
             ("out_count", "アウトカウント"),
@@ -670,8 +685,20 @@ def render_at_bat_editor(at_bat, index):
             symbols_text = st.text_area(
                 "投球内容・記号",
                 value=join_list(at_bat.get("symbols", [])),
-                help="1行に1つずつ入力します。",
+                help="投球記号、打撃記録、走塁記録を1行に1つずつ入力します。",
                 key=f"symbols-{generation}-{index}",
+            )
+            pitch_sequence_text = st.text_area(
+                "投球記号と順序",
+                value=join_list(at_bat.get("pitch_sequence", [])),
+                help="例: ー / ー / ✗ のように1球ずつ1行で入力します。",
+                key=f"pitch-sequence-{generation}-{index}",
+            )
+            count_summary = st.text_input(
+                "カウント",
+                value=at_bat.get("count_summary", ""),
+                help="例: 2ボール1ストライク",
+                key=f"count-summary-{generation}-{index}",
             )
             interpretations_text = st.text_area(
                 "解釈",
@@ -716,6 +743,8 @@ def render_at_bat_editor(at_bat, index):
                 "inning": int(inning),
                 "batter_number": int(batter_number),
                 "symbols": split_lines(symbols_text),
+                "pitch_sequence": split_lines(pitch_sequence_text),
+                "count_summary": count_summary.strip(),
                 "interpretations": split_lines(interpretations_text),
                 "cumulative_pitch_count": int(pitch_count) if has_pitch_count else None,
                 "batting_result": batting_result.strip(),
