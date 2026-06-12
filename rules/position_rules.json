@@ -6,31 +6,37 @@
       "id": "cell-bottom-right-first-base",
       "cell_region": "正方形の右下",
       "meaning": "1塁到達",
-      "description": "打者走者または走者が1塁に到達したことを示す位置。"
+      "description": "1打席マスを野球場に見立てたときの1塁側。打者走者または走者が1塁に到達したことを示す位置。打者の出塁結果もこの付近に書かれやすい。"
     },
     {
       "id": "cell-top-right-second-base",
       "cell_region": "正方形の右上",
       "meaning": "2塁到達",
-      "description": "走者が2塁に到達したことを示す位置。"
+      "description": "1打席マスを野球場に見立てたときの2塁側。走者が2塁に到達したことを示す位置。"
     },
     {
       "id": "cell-top-left-third-base",
       "cell_region": "正方形の左上",
       "meaning": "3塁到達",
-      "description": "走者が3塁に到達したことを示す位置。"
+      "description": "1打席マスを野球場に見立てたときの3塁側。走者が3塁に到達したことを示す位置。"
     },
     {
-      "id": "cell-bottom-left-home",
-      "cell_region": "正方形の左下",
-      "meaning": "本塁到達",
-      "description": "走者が本塁に到達し、得点またはホームインしたことを示す位置。"
+      "id": "cell-center-diamond-runner-path",
+      "cell_region": "マス目中央の菱形",
+      "meaning": "走者の進塁状況",
+      "description": "中央の菱形は、ランナーがベースを回る様子を表す。進塁線や赤線は、右下の1塁、右上の2塁、左上の3塁へ向かう走者移動として読む。"
     },
     {
-      "id": "cell-center-left-on-base",
+      "id": "cell-center-home-score",
       "cell_region": "マス目中央",
-      "meaning": "残塁または得点記号の判定位置",
-      "description": "中央のlは残塁、中央の●または塗りつぶしは得点として読む。"
+      "meaning": "本塁生還、得点、残塁の判定位置",
+      "description": "中央の●または塗りつぶしは本塁生還・得点として読む。中央のlは残塁として読む。"
+    },
+    {
+      "id": "cell-bottom-right-batting-result",
+      "cell_region": "正方形の右下または中央の菱形内",
+      "meaning": "打者の打席結果",
+      "description": "打者がどう出塁したか、またはどの方向へ打ったかは、右下の1塁側または中央の菱形内に書かれやすい。例: 右下の⑧と1塁までの線はセンター前ヒットの可能性が高い。"
     },
     {
       "id": "cell-small-number",
