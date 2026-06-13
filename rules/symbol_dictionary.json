@@ -93,7 +93,9 @@
     {
       "id": "fielding-4e",
       "symbol": "4E",
-      "aliases": ["4 E"],
+      "aliases": [
+        "4 E"
+      ],
       "category": "守備・打球記録",
       "reading": "セカンドのエラーによる出塁",
       "description": "二塁手の失策により打者走者が出塁した記録。"
@@ -101,7 +103,10 @@
     {
       "id": "fielding-3-to",
       "symbol": "3 T.O",
-      "aliases": ["3T.O", "3 TO"],
+      "aliases": [
+        "3T.O",
+        "3 TO"
+      ],
       "category": "守備・打球記録",
       "reading": "一塁手によるタッチアウト",
       "description": "一塁手が打者走者または走者にタッチしてアウトにした記録。"
@@ -109,7 +114,9 @@
     {
       "id": "pitch-ball",
       "symbol": "ー",
-      "aliases": ["-"],
+      "aliases": [
+        "-"
+      ],
       "category": "投球記号",
       "reading": "ボール",
       "description": "投球がボールだったことを示す。"
@@ -117,7 +124,10 @@
     {
       "id": "pitch-called-strike",
       "symbol": "✗",
-      "aliases": ["×", "x"],
+      "aliases": [
+        "×",
+        "x"
+      ],
       "category": "投球記号",
       "reading": "見逃しストライク",
       "description": "打者が見逃したストライクを示す。"
@@ -125,7 +135,11 @@
     {
       "id": "pitch-swinging-strike",
       "symbol": "二重✗",
-      "aliases": ["✗✗", "××", "xx"],
+      "aliases": [
+        "✗✗",
+        "××",
+        "xx"
+      ],
       "category": "投球記号",
       "reading": "空振りストライク",
       "description": "空振りによるストライクを示す。"
@@ -173,7 +187,9 @@
     {
       "id": "out-first",
       "symbol": "Ⅰ",
-      "aliases": ["I"],
+      "aliases": [
+        "I"
+      ],
       "category": "その他の記号",
       "reading": "1アウト目",
       "description": "その回の1つ目のアウトを示す。"
@@ -181,7 +197,9 @@
     {
       "id": "out-second",
       "symbol": "Ⅱ",
-      "aliases": ["II"],
+      "aliases": [
+        "II"
+      ],
       "category": "その他の記号",
       "reading": "2アウト目",
       "description": "その回の2つ目のアウトを示す。"
@@ -189,7 +207,9 @@
     {
       "id": "out-third",
       "symbol": "Ⅲ",
-      "aliases": ["III"],
+      "aliases": [
+        "III"
+      ],
       "category": "その他の記号",
       "reading": "3アウト目",
       "description": "その回の3つ目のアウトを示す。"
@@ -205,7 +225,11 @@
     {
       "id": "base-left-on-base",
       "symbol": "中央のl",
-      "aliases": ["中央のL", "中央l", "l"],
+      "aliases": [
+        "中央のL",
+        "中央l",
+        "l"
+      ],
       "category": "その他の記号",
       "reading": "残塁",
       "description": "マス目中央のlはこの回の残塁を示す。"
@@ -213,7 +237,10 @@
     {
       "id": "inning-end-double-slash",
       "symbol": "右下の斜め二重線",
-      "aliases": ["右下斜め二重線", "斜め二重線"],
+      "aliases": [
+        "右下斜め二重線",
+        "斜め二重線"
+      ],
       "category": "その他の記号",
       "reading": "3アウトで攻撃終了",
       "description": "右下に書かれた斜め二重線は3アウトで攻撃が終了したことを示す。"
@@ -221,7 +248,10 @@
     {
       "id": "run-scored-filled-circle",
       "symbol": "マス目中央の●または塗りつぶし",
-      "aliases": ["●", "塗りつぶし"],
+      "aliases": [
+        "●",
+        "塗りつぶし"
+      ],
       "category": "その他の記号",
       "reading": "得点、ホームイン",
       "description": "マス目中央の●または塗りつぶしは得点、ホームインを示す。"
@@ -229,7 +259,9 @@
     {
       "id": "simultaneous-event-mark",
       "symbol": "’",
-      "aliases": ["'"],
+      "aliases": [
+        "'"
+      ],
       "category": "その他の記号",
       "reading": "同時イベント",
       "description": "独立した投球ではなく、その投球に付随する同時イベントを示す。"
@@ -237,7 +269,9 @@
     {
       "id": "plate-appearance-in-play",
       "symbol": "IP",
-      "aliases": ["インプレー"],
+      "aliases": [
+        "インプレー"
+      ],
       "category": "投球記号",
       "reading": "インプレー",
       "description": "打者がフェアグラウンドへ打球を飛ばし、打撃結果の判定に進んだ投球を示す。"
@@ -245,10 +279,21 @@
     {
       "id": "batting-result-pitcher-infield-hit",
       "symbol": "1H",
-      "aliases": ["1 H", "投手内野安打"],
+      "aliases": [
+        "1 H",
+        "投手内野安打"
+      ],
       "category": "守備・打球記録",
       "reading": "投手への内野安打",
       "description": "投手方向への打球で、打者走者が安打として一塁へ出塁した記録。"
+    },
+    {
+      "id": "symbol-ds",
+      "symbol": "DS",
+      "aliases": [],
+      "category": "走塁",
+      "reading": "DS",
+      "description": "ダブルスチール"
     }
   ]
 }

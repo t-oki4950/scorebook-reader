@@ -1,286 +1,63 @@
 {
   "schema_version": "1.0",
-  "source_image": "inputs/images/20260612-161725-pasted-scorebook.png",
+  "source_image": "inputs/images/20260613-102204-pasted-scorebook.png",
   "status": "provisional",
   "at_bats": [
     {
-      "id": "inning3-batter1",
-      "inning": 3,
+      "id": "inning1-batter1",
+      "inning": 1,
       "batter_number": 1,
-      "symbols": ["DSらしき記載", "赤い進塁線", "8", "丸囲み3らしき印"],
-      "interpretations": ["盗塁または走者イベントの可能性", "走者の進塁または得点の可能性", "中堅手方向またはセンター方向の打球", "走者番号または打点などの注記の可能性"],
+      "symbols": [
+        "✗らしき記載?",
+        "ーらしき記載?",
+        "6-3",
+        "Ⅱ",
+        "中央の菱形"
+      ],
+      "interpretations": [
+        "見逃しストライクの可能性",
+        "ボールの可能性",
+        "ショートゴロ、ファースト送球アウトの可能性",
+        "2アウト目",
+        "走者の進塁経路欄。明確な進塁線は見えない"
+      ],
+      "pitch_sequence": [
+        "✗らしき記載?",
+        "ーらしき記載?"
+      ],
+      "count_summary": "1ボール1ストライクの可能性",
       "cumulative_pitch_count": null,
-      "batting_result": "センター方向の打球または走者イベントを伴う出塁の可能性",
-      "out_count": "",
-      "runner_events": ["赤い線と丸囲み数字があり、走者イベントを伴う可能性が高い"],
-      "notes": "3回列上部。DSらしき文字、赤い進塁線、8が見えるが、打者本人の結果か走者イベントかは未確定。"
-    },
-    {
-      "id": "inning3-batter2",
-      "inning": 3,
-      "batter_number": 2,
-      "symbols": ["下向き矢印", "DSらしき記載", "赤い進塁線", "5?Eらしき記載", "丸囲み3らしき印"],
-      "interpretations": ["走者進塁または盗塁関連イベントの可能性", "失策を含む出塁または進塁の可能性", "丸囲み数字は走者番号または打点注記の可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "失策絡みの出塁または走者進塁の可能性",
-      "out_count": "",
-      "runner_events": ["走者が進塁した可能性"],
-      "notes": "5?Eのように見えるが、守備番号とエラー記録の確度は低い。人間確認が必要。"
-    },
-    {
-      "id": "inning3-batter3",
-      "inning": 3,
-      "batter_number": 3,
-      "symbols": ["赤い進塁線", "9", "丸囲み4"],
-      "interpretations": ["右翼手方向またはライト方向の打球", "走者進塁または得点の可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "ライト方向の打球、出塁または進塁の可能性",
-      "out_count": "",
-      "runner_events": ["赤い進塁線が見える"],
-      "notes": "9は守備番号9として右翼手方向と仮読みにした。"
-    },
-    {
-      "id": "inning3-batter4",
-      "inning": 3,
-      "batter_number": 4,
-      "symbols": ["下向き矢印", "赤い進塁線", "7?8らしき記載", "丸囲み5"],
-      "interpretations": ["走者イベントの可能性", "左翼手または中堅手方向の打球の可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "外野方向の打球または走者イベントを伴う出塁の可能性",
-      "out_count": "",
-      "runner_events": ["走者進塁の可能性"],
-      "notes": "7?8のように見える。7と8のどちらか、または複合メモかは未確定。"
-    },
-    {
-      "id": "inning3-batter5",
-      "inning": 3,
-      "batter_number": 5,
-      "symbols": ["赤い進塁線", "7Eらしき記載", "7"],
-      "interpretations": ["左翼手方向の打球", "左翼手のエラーまたは外野エラーの可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "レフト方向の打球、エラー絡みの出塁の可能性",
-      "out_count": "",
-      "runner_events": ["赤い進塁線が見える"],
-      "notes": "7Eのような記載が見えるが、確定には人間確認が必要。"
-    },
-    {
-      "id": "inning3-batter6",
-      "inning": 3,
-      "batter_number": 6,
-      "symbols": ["Ⅰ", "4-3"],
-      "interpretations": ["1アウト目", "二塁手から一塁手への送球アウト"],
-      "cumulative_pitch_count": null,
-      "batting_result": "セカンドゴロ、一塁送球アウト",
-      "out_count": "1アウト目",
-      "runner_events": [],
-      "notes": "Ⅰと4-3が読める。投球内容は画像から確認できない。"
-    },
-    {
-      "id": "inning3-batter7",
-      "inning": 3,
-      "batter_number": 7,
-      "symbols": ["赤い点", "丸囲み4らしき印", "小書きメモ"],
-      "interpretations": ["得点または走者イベントの可能性", "走者番号または打点注記の可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "走者イベントを伴う打席の可能性",
-      "out_count": "",
-      "runner_events": ["得点または進塁の可能性"],
-      "notes": "記号が重なっており、打撃結果は確定できない。"
-    },
-    {
-      "id": "inning3-batter8",
-      "inning": 3,
-      "batter_number": 8,
-      "symbols": ["Ⅱ", "K"],
-      "interpretations": ["2アウト目", "三振"],
-      "cumulative_pitch_count": null,
-      "batting_result": "三振",
+      "batting_result": "ショートゴロ、ファースト送球アウトの可能性",
       "out_count": "2アウト目",
       "runner_events": [],
-      "notes": "Kの種別は見逃し三振か空振り三振か判別できない。"
-    },
-    {
-      "id": "inning3-batter9",
-      "inning": 3,
-      "batter_number": 9,
-      "symbols": ["(1)", "1E-3らしき記載", "(2)", "DB", "Ⅲ", "K"],
-      "interpretations": ["複数走者または代走番号らしき注記", "一塁手または投手関連のエラー記録の可能性", "デッドボールの可能性", "3アウト目", "三振"],
-      "cumulative_pitch_count": null,
-      "batting_result": "三振またはデッドボール絡みの複合記録の可能性",
-      "out_count": "3アウト目",
-      "runner_events": ["DBらしき記載があり出塁の可能性もあるが、同じマス内のⅢ Kとの関係は未確定"],
-      "inning_end": true,
-      "notes": "下部にⅢとK、右下斜め線らしき印が見えるため3アウト攻撃終了と仮読みにした。ただしDBや1E-3らしき記載との関係は要確認。"
-    },
-    {
-      "id": "inning4-batter1",
-      "inning": 4,
-      "batter_number": 1,
-      "symbols": ["Ⅰ", "K"],
-      "interpretations": ["1アウト目", "三振"],
-      "cumulative_pitch_count": null,
-      "batting_result": "三振",
-      "out_count": "1アウト目",
-      "runner_events": [],
-      "notes": "4回列上部。ⅠとKが読める。"
-    },
-    {
-      "id": "inning4-batter2",
-      "inning": 4,
-      "batter_number": 2,
-      "symbols": ["Ⅲ", "K", "右下斜め二重線らしき印"],
-      "interpretations": ["3アウト目", "三振", "攻撃終了の可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "三振",
-      "out_count": "3アウト目",
-      "runner_events": [],
-      "inning_end": true,
-      "notes": "ⅢとK、斜め線が読める。2アウト目に相当する打席は画像内で見切れている可能性がある。"
-    },
-    {
-      "id": "inning5-batter1",
-      "inning": 5,
-      "batter_number": 1,
-      "symbols": ["メモ: ココに打のせ?"],
-      "interpretations": ["書き手メモの可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "未確定",
-      "out_count": "",
-      "runner_events": [],
-      "notes": "5回列上部にメモらしき文字があるが、打席結果としては読めない。"
-    },
-    {
-      "id": "inning5-batter2",
-      "inning": 5,
-      "batter_number": 2,
-      "symbols": ["Ⅰ", "9-3"],
-      "interpretations": ["1アウト目", "右翼手から一塁手への送球アウトの可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "ライトゴロ、一塁送球アウトの可能性",
-      "out_count": "1アウト目",
-      "runner_events": [],
-      "notes": "9-3が読める。軟式野球の記録としてライトゴロ送球アウトの可能性。"
-    },
-    {
-      "id": "inning5-batter3",
-      "inning": 5,
-      "batter_number": 3,
-      "symbols": ["MPまたはWPらしき記載", "赤い進塁線", "7,8", "丸囲み6"],
-      "interpretations": ["ワイルドピッチまたはミスプレー系イベントの可能性", "走者進塁の可能性", "左翼手・中堅手方向または7,8番走者メモの可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "外野方向の打球または走者イベントを伴う出塁の可能性",
-      "out_count": "",
-      "runner_events": ["赤い進塁線とWP/MPらしき記載がある"],
-      "notes": "WPかMPか判別が難しい。"
-    },
-    {
-      "id": "inning5-batter4",
-      "inning": 5,
-      "batter_number": 4,
-      "symbols": ["WPらしき記載", "B", "丸囲み3?", "5らしき記載"],
-      "interpretations": ["ワイルドピッチの可能性", "フォアボール", "走者注記の可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "フォアボール",
-      "out_count": "",
-      "runner_events": ["WPらしき記載があり走者進塁の可能性"],
-      "notes": "Bが大きく読めるためフォアボールと仮読みにした。WPらしき記載は同時イベントか前後打席イベントか未確定。"
-    },
-    {
-      "id": "inning5-batter5",
-      "inning": 5,
-      "batter_number": 5,
-      "symbols": ["WPらしき記載", "丸囲み8", "1E-23らしき記載"],
-      "interpretations": ["ワイルドピッチまたは走者イベント", "エラー絡みで二塁・三塁への進塁があった可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "エラー絡みの出塁または走者進塁の可能性",
-      "out_count": "",
-      "runner_events": ["WPらしき記載", "1E-23らしき記載から複数塁進塁の可能性"],
-      "notes": "1E-23のように見えるが、守備番号・進塁先の解釈は未確定。"
-    },
-    {
-      "id": "inning5-batter6",
-      "inning": 5,
-      "batter_number": 6,
-      "symbols": ["Ⅱ", "K"],
-      "interpretations": ["2アウト目", "三振"],
-      "cumulative_pitch_count": null,
-      "batting_result": "三振",
-      "out_count": "2アウト目",
-      "runner_events": [],
-      "notes": "ⅡとKが読める。"
-    },
-    {
-      "id": "inning5-batter7",
-      "inning": 5,
-      "batter_number": 7,
-      "symbols": ["MPらしき記載", "B"],
-      "interpretations": ["フォアボール", "走者イベントまたはミスプレー注記の可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "フォアボール",
-      "out_count": "",
-      "runner_events": ["MPらしき記載があり走者イベントの可能性"],
-      "notes": "Bが読めるためフォアボールと仮読みにした。"
-    },
-    {
-      "id": "inning5-batter8",
-      "inning": 5,
-      "batter_number": 8,
-      "symbols": ["Ⅱ", "K"],
-      "interpretations": ["2アウト目またはアウト記号", "三振"],
-      "cumulative_pitch_count": null,
-      "batting_result": "三振",
-      "out_count": "不明",
-      "runner_events": [],
-      "notes": "Ⅱ Kに見えるが、同じ列内でアウトカウントが重複しているため、打順・行対応の確認が必要。"
-    },
-    {
-      "id": "inning5-batter9",
-      "inning": 5,
-      "batter_number": 9,
-      "symbols": ["MPらしき記載", "B"],
-      "interpretations": ["フォアボール", "走者イベントまたはミスプレー注記の可能性"],
-      "cumulative_pitch_count": null,
-      "batting_result": "フォアボール",
-      "out_count": "",
-      "runner_events": ["MPらしき記載あり"],
-      "notes": "下部にBが読める。"
-    },
-    {
-      "id": "inning6-batter1",
-      "inning": 6,
-      "batter_number": 1,
-      "symbols": ["Ⅰ", "1-3"],
-      "interpretations": ["1アウト目", "投手から一塁手への送球アウト"],
-      "cumulative_pitch_count": null,
-      "batting_result": "ピッチャーゴロ、一塁送球アウト",
-      "out_count": "1アウト目",
-      "runner_events": [],
-      "notes": "6回列上部。Ⅰと1-3が読める。"
-    },
-    {
-      "id": "inning6-batter2",
-      "inning": 6,
-      "batter_number": 2,
-      "symbols": ["Ⅱ", "K"],
-      "interpretations": ["2アウト目", "三振"],
-      "cumulative_pitch_count": null,
-      "batting_result": "三振",
-      "out_count": "2アウト目",
-      "runner_events": [],
-      "notes": "ⅡとKが読める。"
-    },
-    {
-      "id": "inning6-batter3",
-      "inning": 6,
-      "batter_number": 3,
-      "symbols": ["Ⅲ", "9-3", "右下斜め二重線"],
-      "interpretations": ["3アウト目", "右翼手から一塁手への送球アウトの可能性", "攻撃終了"],
-      "cumulative_pitch_count": null,
-      "batting_result": "ライトゴロ、一塁送球アウトの可能性",
-      "out_count": "3アウト目",
-      "runner_events": [],
-      "inning_end": true,
-      "notes": "Ⅲ、9-3、斜め二重線が読めるため3アウト攻撃終了と仮読みにした。"
+      "corrections": [
+        {
+          "provisional": "✗らしき記載?",
+          "provisional_interpretation": "見逃しストライクの可能性",
+          "corrected": "✗らしき記載?",
+          "correction_note": ""
+        },
+        {
+          "provisional": "ーらしき記載?",
+          "provisional_interpretation": "ボールの可能性",
+          "corrected": "ーらしき記載?",
+          "correction_note": ""
+        },
+        {
+          "provisional": "6-3",
+          "provisional_interpretation": "ショートゴロ、ファースト送球アウトの可能性",
+          "corrected": "6-3",
+          "correction_note": ""
+        },
+        {
+          "provisional": "Ⅱ",
+          "provisional_interpretation": "2アウト目",
+          "corrected": "Ⅱ",
+          "correction_note": ""
+        }
+      ],
+      "missed_items": [],
+      "notes": "画像は1打席マスの小さい切り抜き。右下の「6-3」は守備番号6から3への送球として、ショートゴロ・ファースト送球アウトの可能性が高い。中央付近の「Ⅱ」は2アウト目として読む。左上の投球欄は小さく、上側が✗、下側がーのようにも見えるが判読不確実のため、人間確認が必要。"
     }
   ]
 }

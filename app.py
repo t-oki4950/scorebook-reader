@@ -300,8 +300,33 @@ def normalize_at_bat(at_bat, index):
     normalized.setdefault("batting_result", "")
     normalized.setdefault("out_count", "")
     normalized.setdefault("runner_events", [])
+    normalized.setdefault("corrections", [])
+    normalized.setdefault("missed_items", [])
     normalized.setdefault("notes", "")
     return normalized
+
+
+def build_correction_rows(at_bat):
+    existing_rows = at_bat.get("corrections") or []
+    if existing_rows:
+        return existing_rows
+
+    symbols = at_bat.get("symbols", [])
+    interpretations = at_bat.get("interpretations", [])
+    row_count = max(len(symbols), len(interpretations), 1)
+    rows = []
+    for row_index in range(row_count):
+        provisional_symbol = symbols[row_index] if row_index < len(symbols) else ""
+        provisional_interpretation = interpretations[row_index] if row_index < len(interpretations) else ""
+        rows.append(
+            {
+                "provisional": provisional_symbol,
+                "provisional_interpretation": provisional_interpretation,
+                "corrected": provisional_symbol,
+                "correction_note": "",
+            }
+        )
+    return rows
 
 
 def reading_signature(reading_data):
@@ -357,6 +382,12 @@ def add_reading_example(at_bat):
         example["cumulative_pitch_count"] = at_bat["cumulative_pitch_count"]
     if at_bat.get("out_count"):
         example["out_count"] = at_bat["out_count"]
+    if at_bat.get("runner_events"):
+        example["runner_events"] = at_bat["runner_events"]
+    if at_bat.get("corrections"):
+        example["corrections"] = at_bat["corrections"]
+    if at_bat.get("missed_items"):
+        example["missed_items"] = at_bat["missed_items"]
     examples.append(example)
     save_json(READING_EXAMPLES_FILE, data)
     return example["id"]
@@ -668,26 +699,63 @@ def render_at_bat_editor(at_bat, index):
     generation = st.session_state.get("editor_generation", 0)
     title = f"{at_bat.get('inning', '')}回 {at_bat.get('batter_number', '')}人目"
     with st.expander(title, expanded=index == 0):
-        left, right = st.columns([2, 1])
-        with left:
-            inning = st.number_input(
-                "イニング",
-                min_value=1,
-                value=int(at_bat.get("inning") or 1),
-                key=f"inning-{generation}-{index}",
+        st.markdown("#### 1対1添削")
+        st.caption("仮読みの各項目に対して、人間の正しい読みを対応させます。読み取られなかったものは下の追加欄に書きます。")
+        correction_rows = []
+        correction_header = st.columns([2, 2, 2, 2])
+        correction_header[0].caption("仮読み")
+        correction_header[1].caption("仮解釈")
+        correction_header[2].caption("人間の修正")
+        correction_header[3].caption("補足")
+        for row_index, row in enumerate(build_correction_rows(at_bat)):
+            row_cols = st.columns([2, 2, 2, 2])
+            provisional = row.get("provisional", "")
+            provisional_interpretation = row.get("provisional_interpretation", "")
+            row_cols[0].text_input(
+                "仮読み",
+                value=provisional,
+                key=f"correction-provisional-{generation}-{index}-{row_index}",
+                label_visibility="collapsed",
+                disabled=True,
             )
-            batter_number = st.number_input(
-                "打者番号",
-                min_value=1,
-                value=int(at_bat.get("batter_number") or index + 1),
-                key=f"batter-{generation}-{index}",
+            row_cols[1].text_input(
+                "仮解釈",
+                value=provisional_interpretation,
+                key=f"correction-interpretation-{generation}-{index}-{row_index}",
+                label_visibility="collapsed",
+                disabled=True,
             )
-            symbols_text = st.text_area(
-                "投球内容・記号",
-                value=join_list(at_bat.get("symbols", [])),
-                help="投球記号、打撃記録、走塁記録を1行に1つずつ入力します。",
-                key=f"symbols-{generation}-{index}",
+            corrected_value = row_cols[2].text_input(
+                "人間の修正",
+                value=row.get("corrected", provisional),
+                key=f"correction-corrected-{generation}-{index}-{row_index}",
+                label_visibility="collapsed",
             )
+            correction_note = row_cols[3].text_input(
+                "補足",
+                value=row.get("correction_note", ""),
+                key=f"correction-note-{generation}-{index}-{row_index}",
+                label_visibility="collapsed",
+            )
+            correction_rows.append(
+                {
+                    "provisional": provisional,
+                    "provisional_interpretation": provisional_interpretation,
+                    "corrected": corrected_value.strip(),
+                    "correction_note": correction_note.strip(),
+                }
+            )
+
+        missed_items_text = st.text_area(
+            "仮読みで拾えなかった項目",
+            value=join_list(at_bat.get("missed_items", [])),
+            help="Codexが読めなかった記号、線、点、走者移動などを1行に1つずつ書きます。",
+            key=f"missed-items-{generation}-{index}",
+        )
+
+        st.markdown("#### 最終読み取り")
+        final_left, final_right = st.columns([2, 1])
+        with final_left:
             pitch_sequence_text = st.text_area(
                 "投球記号と順序",
                 value=join_list(at_bat.get("pitch_sequence", [])),
@@ -700,30 +768,12 @@ def render_at_bat_editor(at_bat, index):
                 help="例: 2ボール1ストライク",
                 key=f"count-summary-{generation}-{index}",
             )
-            interpretations_text = st.text_area(
-                "解釈",
-                value=join_list(at_bat.get("interpretations", [])),
-                help="1行に1つずつ入力します。",
-                key=f"interpretations-{generation}-{index}",
-            )
             batting_result = st.text_input(
                 "打撃結果",
                 value=at_bat.get("batting_result", ""),
                 key=f"result-{generation}-{index}",
             )
-        with right:
-            pitch_count_value = at_bat.get("cumulative_pitch_count")
-            pitch_count = st.number_input(
-                "累計投球数",
-                min_value=0,
-                value=int(pitch_count_value) if pitch_count_value is not None else 0,
-                key=f"pitch-count-{generation}-{index}",
-            )
-            has_pitch_count = st.checkbox(
-                "累計投球数を保存",
-                value=pitch_count_value is not None,
-                key=f"has-pitch-count-{generation}-{index}",
-            )
+        with final_right:
             out_count = st.text_input(
                 "アウトカウント",
                 value=at_bat.get("out_count", ""),
@@ -732,10 +782,59 @@ def render_at_bat_editor(at_bat, index):
             runner_events_text = st.text_area(
                 "走者イベント",
                 value=join_list(at_bat.get("runner_events", [])),
-                help="例: 三塁走者ホームイン",
+                help="例: 一塁到達、得点",
                 key=f"runner-events-{generation}-{index}",
             )
             notes = st.text_area("備考", value=at_bat.get("notes", ""), key=f"notes-{generation}-{index}")
+
+        with st.expander("詳細・管理情報", expanded=False):
+            detail_left, detail_right = st.columns([2, 1])
+            with detail_left:
+                inning = st.number_input(
+                    "イニング",
+                    min_value=1,
+                    value=int(at_bat.get("inning") or 1),
+                    key=f"inning-{generation}-{index}",
+                )
+                batter_number = st.number_input(
+                    "打者番号",
+                    min_value=1,
+                    value=int(at_bat.get("batter_number") or index + 1),
+                    key=f"batter-{generation}-{index}",
+                )
+                symbols_text = st.text_area(
+                    "投球内容・記号",
+                    value=join_list(at_bat.get("symbols", [])),
+                    help="仮読みで拾った投球記号、打撃記録、走塁記録の生データです。",
+                    key=f"symbols-{generation}-{index}",
+                )
+                interpretations_text = st.text_area(
+                    "解釈",
+                    value=join_list(at_bat.get("interpretations", [])),
+                    help="仮読みされた各記号の解釈です。通常は1対1添削と最終読み取りを直せば十分です。",
+                    key=f"interpretations-{generation}-{index}",
+                )
+            with detail_right:
+                pitch_count_value = at_bat.get("cumulative_pitch_count")
+                pitch_count = st.number_input(
+                    "累計投球数",
+                    min_value=0,
+                    value=int(pitch_count_value) if pitch_count_value is not None else 0,
+                    key=f"pitch-count-{generation}-{index}",
+                )
+                has_pitch_count = st.checkbox(
+                    "累計投球数を保存",
+                    value=pitch_count_value is not None,
+                    key=f"has-pitch-count-{generation}-{index}",
+                )
+        if "inning" not in locals():
+            inning = int(at_bat.get("inning") or 1)
+            batter_number = int(at_bat.get("batter_number") or index + 1)
+            symbols_text = join_list(at_bat.get("symbols", []))
+            interpretations_text = join_list(at_bat.get("interpretations", []))
+            pitch_count_value = at_bat.get("cumulative_pitch_count")
+            pitch_count = int(pitch_count_value) if pitch_count_value is not None else 0
+            has_pitch_count = pitch_count_value is not None
 
         updated = deepcopy(at_bat)
         updated.update(
@@ -750,6 +849,8 @@ def render_at_bat_editor(at_bat, index):
                 "batting_result": batting_result.strip(),
                 "out_count": out_count.strip(),
                 "runner_events": split_lines(runner_events_text),
+                "corrections": correction_rows,
+                "missed_items": split_lines(missed_items_text),
                 "notes": notes.strip(),
             }
         )

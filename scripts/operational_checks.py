@@ -57,6 +57,9 @@ def symbol_counts_as_pitch(symbol):
 
 
 def count_independent_pitches(at_bat):
+    pitch_sequence = at_bat.get("pitch_sequence")
+    if pitch_sequence:
+        return sum(1 for symbol in pitch_sequence if symbol_counts_as_pitch(symbol))
     pitch_events = at_bat.get("pitch_events")
     if pitch_events:
         return sum(1 for event in pitch_events if event_counts_as_pitch(event))
@@ -72,8 +75,12 @@ def sorted_at_bats(reading):
 
 def validate_cumulative_pitch_counts(reading):
     errors = []
+    at_bats = sorted_at_bats(reading)
+    if len(at_bats) <= 1:
+        return errors
+
     previous_by_inning = {}
-    for at_bat in sorted_at_bats(reading):
+    for at_bat in at_bats:
         inning = at_bat.get("inning")
         batter_number = at_bat.get("batter_number")
         cumulative = at_bat.get("cumulative_pitch_count")

@@ -510,6 +510,172 @@
       "notes": "Ⅲは比較的読める。右側の記載は3Aまたは3-?のように見えるが、3Aが正解",
       "cumulative_pitch_count": 5,
       "out_count": "3アウト目"
+    },
+    {
+      "id": "small-horizontal-line-as-ball",
+      "inning": 3,
+      "batter_number": 1,
+      "symbols": [
+        "ー",
+        "ー",
+        "DSらしき記載",
+        "赤い進塁線",
+        "赤い点または塗りつぶし",
+        "8"
+      ],
+      "interpretations": [
+        "ボール",
+        "ボール",
+        "盗塁または走者イベントの可能性",
+        "走者の進塁線の可能性",
+        "得点またはホームインの可能性",
+        "中堅手方向またはセンター方向の打球"
+      ],
+      "batting_result": "センター方向の打球または走者イベントを伴う出塁の可能性",
+      "notes": "小さい切り抜きでも、ボールカウント欄の短い横線は「ー」（ボール）として読む。この事例では横線が2つ見えるため、ボールが2球続いたと解釈する。ユーザー確認済み。"
+    },
+    {
+      "id": "inning3-batter1",
+      "inning": 3,
+      "batter_number": 1,
+      "symbols": [
+        "ー",
+        "ー",
+        "DSらしき記載",
+        "波線または同時イベント記号らしき記載?",
+        "赤い進塁線",
+        "赤い点または塗りつぶし",
+        "8",
+        "丸囲み3らしき印"
+      ],
+      "interpretations": [
+        "ボール",
+        "ボール",
+        "盗塁または走者イベントの可能性",
+        "同時イベントまたは走者メモの可能性",
+        "走者の進塁線の可能性",
+        "得点またはホームインの可能性",
+        "中堅手方向またはセンター方向の打球",
+        "走者番号、打点、または注記の可能性"
+      ],
+      "batting_result": "センター方向の打球またはセンター前ヒットの可能性",
+      "notes": "画像は1マスの一部だけの小さい切り抜き。ユーザー確認により、ボールカウント欄左上の横線は2つとも「ー」（ボール）として読み、この打席はボールが2球続いたと解釈する。右下付近の8は守備番号8として中堅手方向と仮読みにした。赤線と8の位置関係からセンター前ヒットの可能性があるが、DS、波線、丸囲み3、赤点の意味は人間確認が必要。",
+      "pitch_sequence": [
+        "ー",
+        "ー"
+      ],
+      "count_summary": "2ボール0ストライク",
+      "runner_events": [
+        "赤い進塁線が見えるため、打者走者または既存走者の進塁の可能性がある",
+        "赤い点または塗りつぶしが見えるため、得点・ホームインの可能性がある",
+        "DSらしき記載は盗塁または走者イベントの可能性がある"
+      ],
+      "corrections": [
+        {
+          "provisional": "ー",
+          "provisional_interpretation": "ボール",
+          "corrected": "ー",
+          "correction_note": ""
+        },
+        {
+          "provisional": "ー",
+          "provisional_interpretation": "ボール",
+          "corrected": "ー",
+          "correction_note": ""
+        },
+        {
+          "provisional": "DSらしき記載",
+          "provisional_interpretation": "盗塁または走者イベントの可能性",
+          "corrected": "DS  ''",
+          "correction_note": "ダブルスチール,''は次の打者以降の投球中のイベントの印"
+        },
+        {
+          "provisional": "波線または同時イベント記号らしき記載?",
+          "provisional_interpretation": "同時イベントまたは走者メモの可能性",
+          "corrected": "S  '",
+          "correction_note": "盗塁, 'は次の打者以降の投球中のイベントの印"
+        },
+        {
+          "provisional": "赤い進塁線",
+          "provisional_interpretation": "走者の進塁線の可能性",
+          "corrected": "赤い進塁線",
+          "correction_note": "中央のマスの右下部分だけなので1塁に進塁（シングルヒット）"
+        },
+        {
+          "provisional": "赤い点または塗りつぶし",
+          "provisional_interpretation": "得点またはホームインの可能性",
+          "corrected": "赤い点または塗りつぶし",
+          "correction_note": "ホームイン"
+        },
+        {
+          "provisional": "8",
+          "provisional_interpretation": "中堅手方向またはセンター方向の打球",
+          "corrected": "8",
+          "correction_note": ""
+        },
+        {
+          "provisional": "丸囲み3らしき印",
+          "provisional_interpretation": "走者番号、打点、または注記の可能性",
+          "corrected": "丸囲み3らしき印",
+          "correction_note": "3番打者の時にホームイン"
+        }
+      ],
+      "missed_items": [
+        "投球順の欄の下の「4」：そのイニングの投手の累計投球数"
+      ]
+    },
+    {
+      "id": "inning1-batter1-3",
+      "inning": 1,
+      "batter_number": 1,
+      "symbols": [
+        "✗らしき記載?",
+        "ーらしき記載?",
+        "6-3",
+        "Ⅱ",
+        "中央の菱形"
+      ],
+      "interpretations": [
+        "見逃しストライクの可能性",
+        "ボールの可能性",
+        "ショートゴロ、ファースト送球アウトの可能性",
+        "2アウト目",
+        "走者の進塁経路欄。明確な進塁線は見えない"
+      ],
+      "batting_result": "ショートゴロ、ファースト送球アウト",
+      "notes": "画像は1打席マスの小さい切り抜き。右下の「6-3」は守備番号6から3への送球として、ショートゴロ・ファースト送球アウトの可能性が高い。中央付近の「Ⅱ」は2アウト目として読む。左上の投球欄は小さく、上側が✗、下側がーのようにも見えるが判読不確実のため、人間確認が必要。",
+      "pitch_sequence": [
+        "✗",
+        "ー"
+      ],
+      "count_summary": "1ボール1ストライク",
+      "out_count": "2アウト目",
+      "corrections": [
+        {
+          "provisional": "✗らしき記載?",
+          "provisional_interpretation": "見逃しストライクの可能性",
+          "corrected": "✗",
+          "correction_note": ""
+        },
+        {
+          "provisional": "ーらしき記載?",
+          "provisional_interpretation": "ボールの可能性",
+          "corrected": "ー",
+          "correction_note": ""
+        },
+        {
+          "provisional": "6-3",
+          "provisional_interpretation": "ショートゴロ、ファースト送球アウトの可能性",
+          "corrected": "6-3",
+          "correction_note": "ショートゴロでファーストに送球"
+        },
+        {
+          "provisional": "Ⅱ",
+          "provisional_interpretation": "2アウト目",
+          "corrected": "Ⅱ",
+          "correction_note": ""
+        }
+      ]
     }
   ]
 }

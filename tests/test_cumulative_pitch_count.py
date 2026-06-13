@@ -33,3 +33,30 @@ def test_cumulative_pitch_count_error_is_reported_in_japanese():
     errors = operational_checks.validate_cumulative_pitch_counts(reading)
     assert errors
     assert "累計投球数" in errors[0]
+
+
+def test_single_at_bat_reading_does_not_require_previous_context():
+    reading = {
+        "schema_version": "1.0",
+        "status": "corrected",
+        "at_bats": [
+            {
+                "inning": 1,
+                "batter_number": 1,
+                "symbols": ["✗らしき記載?", "ーらしき記載?", "6-3", "Ⅱ"],
+                "pitch_sequence": ["✗", "ー"],
+                "cumulative_pitch_count": 7,
+            }
+        ],
+    }
+
+    assert operational_checks.validate_cumulative_pitch_counts(reading) == []
+
+
+def test_pitch_sequence_is_used_for_independent_pitch_count_when_present():
+    at_bat = {
+        "symbols": ["✗らしき記載?", "ーらしき記載?", "6-3", "Ⅱ"],
+        "pitch_sequence": ["✗", "ー"],
+    }
+
+    assert operational_checks.count_independent_pitches(at_bat) == 2

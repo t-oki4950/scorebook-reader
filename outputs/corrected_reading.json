@@ -1,6 +1,66 @@
 {
   "schema_version": "1.0",
-  "source_image": "inputs/images/20260612-161725-pasted-scorebook.png",
+  "source_image": "inputs/images/20260613-102204-pasted-scorebook.png",
   "status": "corrected",
-  "at_bats": []
+  "at_bats": [
+    {
+      "id": "inning1-batter1",
+      "inning": 1,
+      "batter_number": 1,
+      "symbols": [
+        "✗らしき記載?",
+        "ーらしき記載?",
+        "6-3",
+        "Ⅱ",
+        "中央の菱形"
+      ],
+      "interpretations": [
+        "見逃しストライクの可能性",
+        "ボールの可能性",
+        "ショートゴロ、ファースト送球アウトの可能性",
+        "2アウト目",
+        "走者の進塁経路欄。明確な進塁線は見えない"
+      ],
+      "pitch_sequence": [
+        "✗",
+        "ー"
+      ],
+      "count_summary": "1ボール1ストライク",
+      "cumulative_pitch_count": 7,
+      "batting_result": "ショートゴロ、ファースト送球アウト",
+      "out_count": "2アウト目",
+      "runner_events": [],
+      "corrections": [
+        {
+          "provisional": "✗らしき記載?",
+          "provisional_interpretation": "見逃しストライクの可能性",
+          "corrected": "✗",
+          "correction_note": ""
+        },
+        {
+          "provisional": "ーらしき記載?",
+          "provisional_interpretation": "ボールの可能性",
+          "corrected": "ー",
+          "correction_note": ""
+        },
+        {
+          "provisional": "6-3",
+          "provisional_interpretation": "ショートゴロ、ファースト送球アウトの可能性",
+          "corrected": "6-3",
+          "correction_note": "ショートゴロでファーストに送球"
+        },
+        {
+          "provisional": "Ⅱ",
+          "provisional_interpretation": "2アウト目",
+          "corrected": "Ⅱ",
+          "correction_note": ""
+        }
+      ],
+      "missed_items": [
+        "投球欄の一番下の記号は「7」。投手の累計投球は7球になります"
+      ],
+      "notes": "画像は1打席マスの小さい切り抜き。右下の「6-3」は守備番号6から3への送球として、ショートゴロ・ファースト送球アウトの可能性が高い。中央付近の「Ⅱ」は2アウト目として読む。左上の投球欄は小さく、上側が✗、下側がーのようにも見えるが判読不確実のため、人間確認が必要。"
+    }
+  ],
+  "correction_notes": []
 }
